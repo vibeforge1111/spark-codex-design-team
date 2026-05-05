@@ -1,6 +1,6 @@
 {
   "name": "spark-codex-design-team",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "H70-C+ Spark Skill Graphs for Codex Desktop visual builder loops with imagegen and vision.",
   "type": "commonjs",
