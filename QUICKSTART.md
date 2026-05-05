@@ -38,6 +38,7 @@ Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobil
 Good output includes:
 
 - first desktop and mobile screenshots
+- concrete Codex vision observations from those screenshots
 - the top visible issue
 - at most 1-2 specialist lenses, only when screenshot evidence justifies them
 - the fix that was made
@@ -56,6 +57,7 @@ Goal:
 Viewport matrix:
 State matrix:
 Screenshots inspected:
+Vision observations:
 Top issues:
 Chosen issue:
 Lens used:
@@ -80,6 +82,7 @@ After the run, validate that the packet is not just a blank ritual:
 
 ```powershell
 npm run check-proof-packet -- --cwd ../my-app
+npm run score-proof-packet -- --cwd ../my-app
 ```
 
 If the screen is important enough to protect with a repeatable screenshot check:

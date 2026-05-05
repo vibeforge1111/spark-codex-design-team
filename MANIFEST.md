@@ -19,6 +19,11 @@
 - `FREE-DROP.md`
 - `MANIFEST.md`
 
+## Benchmarks
+
+- `benchmarks/README.md`
+- `benchmarks/RUN_TEMPLATE.md`
+
 ## Example App
 
 - `examples/first-run-demo/README.md`
@@ -34,6 +39,7 @@
 - `tools/recommend-workflow.cjs`
 - `tools/create-proof-packet.cjs`
 - `tools/check-proof-packet.cjs`
+- `tools/score-proof-packet.cjs`
 - `tools/scaffold-playwright-visual.cjs`
 - `tools/usage-audit.cjs`
 

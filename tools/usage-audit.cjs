@@ -14,6 +14,8 @@ const WORKFLOW = path.join(ROOT, "WORKFLOW.md");
 const PROMPTS = path.join(ROOT, "PROMPTS.md");
 const FREE_DROP = path.join(ROOT, "FREE-DROP.md");
 const MANIFEST = path.join(ROOT, "MANIFEST.md");
+const BENCHMARKS_README = path.join(ROOT, "benchmarks", "README.md");
+const BENCHMARKS_TEMPLATE = path.join(ROOT, "benchmarks", "RUN_TEMPLATE.md");
 const PACKAGE_JSON = path.join(ROOT, "package.json");
 const CODEX_SKILL = path.join(ROOT, "codex", "codex-visual-builder-guild", "SKILL.md");
 const CODEX_OPENAI = path.join(ROOT, "codex", "codex-visual-builder-guild", "agents", "openai.yaml");
@@ -21,6 +23,7 @@ const INSTALLER = path.join(ROOT, "tools", "install-codex-skill.cjs");
 const WORKFLOW_RECOMMENDER = path.join(ROOT, "tools", "recommend-workflow.cjs");
 const PROOF_PACKET_TOOL = path.join(ROOT, "tools", "create-proof-packet.cjs");
 const PROOF_PACKET_CHECKER = path.join(ROOT, "tools", "check-proof-packet.cjs");
+const PROOF_PACKET_SCORER = path.join(ROOT, "tools", "score-proof-packet.cjs");
 const PLAYWRIGHT_SCAFFOLD_TOOL = path.join(ROOT, "tools", "scaffold-playwright-visual.cjs");
 const DEMO_README = path.join(ROOT, "examples", "first-run-demo", "README.md");
 const DEMO_PROOF = path.join(ROOT, "examples", "first-run-demo", "PROOF_PACKET.md");
@@ -99,6 +102,7 @@ function assertInstallWorks() {
     assert(output.includes("CODEX_HOME:"), "installer output should print CODEX_HOME");
     assert(output.includes("Verified:"), "installer output should include verification summary");
     assert(output.includes("First 5-minute win prompt:"), "installer output should include first-run prompt");
+    assert(output.includes("Codex vision"), "installer prompt should require actual Codex vision");
     assert(output.includes("single highest-impact visual issue"), "installer prompt should bias toward one fast visible win");
     assert(output.includes("at most 1-2 specialist lenses"), "installer prompt should suppress specialist ceremony");
     assert(output.includes("Run Report Contract"), "installer prompt should require the run report contract");
@@ -122,6 +126,7 @@ function assertScaffoldToolsWork() {
     const proofText = read(proofPath);
     assert(proofText.includes("Audit the dashboard command surface."), "proof packet should include the requested goal");
     assert(proofText.includes("Viewport matrix:"), "proof packet should include viewport matrix");
+    assert(proofText.includes("Vision observations:"), "proof packet should include vision observations");
     assert(proofText.includes("Automation notes:"), "proof packet should include automation notes");
     fs.mkdirSync(path.join(tempProject, "artifacts", "visual-guild"), { recursive: true });
     fs.writeFileSync(path.join(tempProject, "artifacts", "visual-guild", "before-desktop.png"), "fake", "utf8");
@@ -132,6 +137,7 @@ Goal: Audit the dashboard command surface.
 Viewport matrix: desktop before and after checked.
 State matrix: default state checked; interaction states not checked for this pass.
 Screenshots inspected: artifacts/visual-guild/before-desktop.png and artifacts/visual-guild/after-desktop.png
+Vision observations: desktop before lacks a command surface; after screenshot shows command spine above raw evidence.
 Top issues: missing command surface, weak mobile summary, long evidence lists.
 Chosen issue: add command surface because it changes the first five seconds.
 Lens used: saas-dashboard-operator.
@@ -147,6 +153,13 @@ Automation notes: manual screenshot pass only.
       encoding: "utf8",
       stdio: "pipe"
     });
+    const scoreOutput = execFileSync(process.execPath, [PROOF_PACKET_SCORER, "--cwd", tempProject, "--file", proofOut], {
+      cwd: ROOT,
+      encoding: "utf8",
+      stdio: "pipe"
+    });
+    assert(scoreOutput.includes("Proof packet score:"), "score-proof-packet should print a score");
+    assert(scoreOutput.includes("actual vision observations"), "score-proof-packet should score vision observations");
 
     execFileSync(process.execPath, [PLAYWRIGHT_SCAFFOLD_TOOL, "--cwd", tempProject, "--url", "http://127.0.0.1:5173/#agent", "--name", "agent-dashboard"], {
       cwd: ROOT,
@@ -186,6 +199,8 @@ const workflow = read(WORKFLOW);
 const freeDrop = read(FREE_DROP);
 const prompts = read(PROMPTS);
 const manifest = read(MANIFEST);
+const benchmarksReadme = read(BENCHMARKS_README);
+const benchmarksTemplate = read(BENCHMARKS_TEMPLATE);
 const codexSkill = read(CODEX_SKILL);
 const openaiYaml = read(CODEX_OPENAI);
 const packageJson = JSON.parse(read(PACKAGE_JSON));
@@ -195,10 +210,11 @@ assert(packageJson.scripts?.["install:codex"] === "node tools/install-codex-skil
 assert(packageJson.scripts?.["recommend-workflow"] === "node tools/recommend-workflow.cjs", "package.json should expose recommend-workflow");
 assert(packageJson.scripts?.["create-proof-packet"] === "node tools/create-proof-packet.cjs", "package.json should expose create-proof-packet");
 assert(packageJson.scripts?.["check-proof-packet"] === "node tools/check-proof-packet.cjs", "package.json should expose check-proof-packet");
+assert(packageJson.scripts?.["score-proof-packet"] === "node tools/score-proof-packet.cjs", "package.json should expose score-proof-packet");
 assert(packageJson.scripts?.["scaffold:playwright-visual"] === "node tools/scaffold-playwright-visual.cjs", "package.json should expose scaffold:playwright-visual");
 assert(packageJson.scripts?.["audit:usage"] === "node tools/usage-audit.cjs", "package.json should expose audit:usage");
 
-for (const file of [README, QUICKSTART, WORKFLOW, PROMPTS, FREE_DROP, MANIFEST, CODEX_SKILL, CODEX_OPENAI, INSTALLER, WORKFLOW_RECOMMENDER, PROOF_PACKET_TOOL, PROOF_PACKET_CHECKER, PLAYWRIGHT_SCAFFOLD_TOOL, DEMO_README, DEMO_PROOF, DEMO_INDEX, DEMO_STYLES]) {
+for (const file of [README, QUICKSTART, WORKFLOW, PROMPTS, FREE_DROP, MANIFEST, BENCHMARKS_README, BENCHMARKS_TEMPLATE, CODEX_SKILL, CODEX_OPENAI, INSTALLER, WORKFLOW_RECOMMENDER, PROOF_PACKET_TOOL, PROOF_PACKET_CHECKER, PROOF_PACKET_SCORER, PLAYWRIGHT_SCAFFOLD_TOOL, DEMO_README, DEMO_PROOF, DEMO_INDEX, DEMO_STYLES]) {
   assert(fs.existsSync(file), `expected file to exist: ${path.relative(ROOT, file)}`);
 }
 
@@ -221,6 +237,7 @@ for (const phrase of [
   "npm run recommend-workflow",
   "npm run create-proof-packet",
   "npm run check-proof-packet",
+  "npm run score-proof-packet",
   "npm run scaffold:playwright-visual"
 ]) {
   assert(readme.includes(phrase), `README should include install/invoke phrase: ${phrase}`);
@@ -237,6 +254,7 @@ for (const phrase of [
   "viewport matrix",
   "state matrix",
   "screenshots inspected",
+  "vision observations",
   "accepted visual change",
   "automation notes",
   "reusable rule"
@@ -267,6 +285,7 @@ for (const phrase of [
   "Automation Recipes",
   "npm run create-proof-packet",
   "npm run check-proof-packet",
+  "npm run score-proof-packet",
   "npm run scaffold:playwright-visual",
   "Playwright Visual Baseline",
   "Axe Accessibility Check",
@@ -283,6 +302,17 @@ for (const phrase of [
   "Get value in 5 minutes"
 ]) {
   assert(freeDrop.includes(phrase), `FREE-DROP should include public-drop phrase: ${phrase}`);
+}
+
+for (const phrase of [
+  "Plain Codex",
+  "Guild Codex",
+  "Do not invent results",
+  "proof packet score",
+  "not run"
+]) {
+  assert(benchmarksReadme.includes(phrase), `benchmarks README should include: ${phrase}`);
+  assert(benchmarksTemplate.includes(phrase) || phrase === "Do not invent results", `benchmark template should include: ${phrase}`);
 }
 
 const demoText = `${read(DEMO_README)}\n${read(DEMO_PROOF)}\n${read(DEMO_INDEX)}\n${read(DEMO_STYLES)}`;
@@ -303,6 +333,7 @@ for (const phrase of [
   "viewport matrix",
   "state matrix",
   "screenshots inspected",
+  "vision observations",
   "chosen issue",
   "lens used",
   "exact fix",
@@ -336,6 +367,7 @@ for (const phrase of [
 
 assert(openaiYaml.includes("default_prompt:"), "agents/openai.yaml should include default_prompt");
 assert(openaiYaml.includes("screenshot desktop and mobile"), "default prompt should preserve screenshot workflow");
+assert(openaiYaml.includes("Codex vision"), "default prompt should require actual Codex vision");
 assert(openaiYaml.includes("single highest-impact visual issue"), "default prompt should bias toward a minimum useful pass");
 assert(openaiYaml.includes("Run Report Contract"), "default prompt should require the run report contract");
 assert(openaiYaml.includes("at most 1-2 specialist lenses"), "default prompt should suppress specialist ceremony");
@@ -344,9 +376,12 @@ assert(manifest.includes("tools/usage-audit.cjs"), "MANIFEST should list usage a
 assert(manifest.includes("tools/recommend-workflow.cjs"), "MANIFEST should list workflow recommender");
 assert(manifest.includes("tools/create-proof-packet.cjs"), "MANIFEST should list proof packet scaffold tool");
 assert(manifest.includes("tools/check-proof-packet.cjs"), "MANIFEST should list proof packet checker");
+assert(manifest.includes("tools/score-proof-packet.cjs"), "MANIFEST should list proof packet scorer");
 assert(manifest.includes("tools/scaffold-playwright-visual.cjs"), "MANIFEST should list Playwright scaffold tool");
 assert(manifest.includes("QUICKSTART.md"), "MANIFEST should list quickstart");
 assert(manifest.includes("WORKFLOW.md"), "MANIFEST should list workflow guide");
+assert(manifest.includes("benchmarks/README.md"), "MANIFEST should list benchmarks README");
+assert(manifest.includes("benchmarks/RUN_TEMPLATE.md"), "MANIFEST should list benchmark template");
 assert(manifest.includes("examples/first-run-demo/PROOF_PACKET.md"), "MANIFEST should list demo proof packet");
 
 const routingQueries = [
@@ -392,6 +427,6 @@ console.log("- PROMPTS specialist spellbook verified");
 console.log("- Codex wrapper trigger and metadata verified");
 console.log("- installer overwrite/idempotence verified in temp CODEX_HOME");
 console.log("- workflow recommender verified");
-console.log("- proof packet and Playwright visual scaffold tools verified");
+console.log("- proof packet check, score, and Playwright visual scaffold tools verified");
 console.log("- keyword routing checks passed for all 16 specialists");
 console.log("- beginner first-run, quickstart, proof packet, and demo app coverage verified");

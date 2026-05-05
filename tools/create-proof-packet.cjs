@@ -58,6 +58,7 @@ Goal:
 Viewport matrix:
 State matrix:
 Screenshots inspected:
+Vision observations:
 Top issues:
 Chosen issue:
 Lens used:
@@ -90,6 +91,12 @@ Automation notes:
 
 ## Screenshot Review
 
+Vision observations:
+
+- desktop before:
+- mobile before:
+- after comparison:
+
 Top issues:
 
 1. 
@@ -115,7 +122,7 @@ Automation notes:
 ## Suggested Codex Prompt
 
 \`\`\`text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, use at most 1-2 specialist lenses only if screenshots prove they are needed, then finish with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, inspect the actual screenshots with vision, record specific vision observations for each viewport, fix the single highest-impact visual issue, use at most 1-2 specialist lenses only if screenshots prove they are needed, then finish with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, vision observations, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
 \`\`\`
 `;
 }

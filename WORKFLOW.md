@@ -8,13 +8,16 @@ Use this when a builder wants value fast.
 
 1. Run the app locally.
 2. Capture before screenshots for desktop and mobile.
-3. Inspect the screenshots with vision.
-4. Name the top 3 visible issues.
-5. Pick the single highest-impact issue.
-6. Use at most 1-2 specialist lenses, only if they change the next action.
-7. Fix the issue.
-8. Capture matching after screenshots.
-9. Finish with the Run Report Contract.
+3. Inspect the screenshots with actual Codex App vision.
+4. Record concrete vision observations by viewport.
+5. Name the top 3 visible issues.
+6. Pick the single highest-impact issue.
+7. Use at most 1-2 specialist lenses, only if they change the next action.
+8. Fix the issue.
+9. Capture matching after screenshots.
+10. Finish with the Run Report Contract.
+
+Screenshots are not the value by themselves. They are the evidence Codex App vision needs before making a visual claim.
 
 ## Lens Router
 
@@ -72,13 +75,17 @@ After the run, check that the packet has real fields and screenshot paths:
 
 ```powershell
 npm run check-proof-packet -- --cwd ../my-app
+npm run score-proof-packet -- --cwd ../my-app
 ```
+
+Aim for `95/100` only when the packet has screenshots, actual vision observations, viewport coverage, a specific fix, verification, residual risk, and automation notes. A low score is useful; it means the run was still mostly talk.
 
 ```text
 Goal:
 Viewport matrix:
 State matrix:
 Screenshots inspected:
+Vision observations:
 Top issues:
 Chosen issue:
 Lens used:

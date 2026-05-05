@@ -8,6 +8,7 @@ const REQUIRED_FIELDS = [
   "Viewport matrix",
   "State matrix",
   "Screenshots inspected",
+  "Vision observations",
   "Top issues",
   "Chosen issue",
   "Lens used",

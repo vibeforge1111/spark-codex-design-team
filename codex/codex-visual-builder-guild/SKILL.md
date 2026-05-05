@@ -63,6 +63,7 @@ Every guild run must end with a compact report that proves the visual decision l
 - `viewport matrix`: desktop/mobile/tablet/wide coverage, or `not checked`.
 - `state matrix`: default/hover/focus/loading/empty/error coverage, or `not checked`.
 - `screenshots inspected`: before and after screenshot paths, with viewport names.
+- `vision observations`: concrete things Codex saw in the screenshots, separated by viewport/state. Do not infer this from code.
 - `top issues`: the top 3 visible issues found from screenshots.
 - `chosen issue`: the issue fixed first and why it was highest impact.
 - `lens used`: the specialist lens used, or `none` with a reason.
@@ -113,7 +114,8 @@ Use these specialist lenses:
 - Use at most 1-2 specialist lenses unless screenshots prove more are needed.
 - End with the Run Report Contract so the user can judge the work.
 - Use imagegen for real assets, not decorative filler.
-- Use vision to judge the integrated UI, not just the source image.
+- Use actual Codex App vision to judge the integrated UI, not just the source image or source code.
+- Record vision observations before naming the chosen issue.
 - Fix the highest-impact visual issue first.
 - Do not invoke specialist lenses just to name them; each lens must produce a concrete artifact.
 - Keep edits compatible with the existing codebase and design system.

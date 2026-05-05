@@ -81,10 +81,11 @@ Expected result:
 
 - Codex runs the app instead of guessing from source code.
 - You get desktop and mobile screenshots.
+- Codex records concrete vision observations from those screenshots.
 - The guild names the biggest visible problem.
 - The guild uses at most 1-2 specialist lenses unless screenshots prove more are needed.
 - Codex fixes one high-impact issue and screenshots the result.
-- The final answer follows the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
+- The final answer follows the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, vision observations, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
 
 Want a disposable target? Open [`examples/first-run-demo`](examples/first-run-demo) and ask the guild to improve it.
 
@@ -147,8 +148,11 @@ You can also scaffold the proof artifacts:
 npm run recommend-workflow -- --need "dashboard mobile regression"
 npm run create-proof-packet -- --cwd ../my-app
 npm run check-proof-packet -- --cwd ../my-app
+npm run score-proof-packet -- --cwd ../my-app
 npm run scaffold:playwright-visual -- --cwd ../my-app --url http://127.0.0.1:5173 --name dashboard
 ```
+
+For honest guild-vs-plain-Codex evals, use [`benchmarks/RUN_TEMPLATE.md`](benchmarks/RUN_TEMPLATE.md). The benchmark folder is intentionally empty of fake wins; add only runs with real screenshots and proof scores.
 
 ## How It Works
 

@@ -7,7 +7,7 @@ If you installed the native Codex skill with `npm run install:codex`, start prom
 ## Shortest Useful Prompt
 
 ```text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, use at most 1-2 specialist lenses only if screenshots prove they are needed, then finish with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, inspect the actual screenshots with Codex vision, record concrete vision observations by viewport, fix the single highest-impact visual issue, use at most 1-2 specialist lenses only if screenshots prove they are needed, then finish with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, vision observations, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
 ```
 
 ## Install Then Invoke
@@ -34,12 +34,13 @@ Use codex-visual-builder-guild on this app.
 
 Run it locally, take desktop and mobile screenshots, inspect the rendered UI with vision, name the top 3 visual issues, fix the highest-impact one, then capture after screenshots.
 
-End with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected with screenshot paths, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
+End with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected with screenshot paths, vision observations, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
 ```
 
 Good output should include:
 
 - the first desktop and mobile screenshots
+- concrete Codex vision observations from the screenshots
 - the highest-impact issue chosen
 - the specialist lens used only if it helped the fix; otherwise `lens used: none`
 - the after screenshots
@@ -52,6 +53,7 @@ Optional scaffold before the run:
 npm run recommend-workflow -- --need "first demo polish"
 npm run create-proof-packet -- --cwd ../my-app
 npm run check-proof-packet -- --cwd ../my-app
+npm run score-proof-packet -- --cwd ../my-app
 ```
 
 ## No-Ceremony Routed Pass
@@ -61,7 +63,7 @@ Use this after the first run, or when you know the guild was getting too theatri
 ```text
 Use codex-visual-builder-guild on this app as a no-ceremony visual QA pass.
 
-Run the app, capture before screenshots on desktop and mobile, inspect the rendered UI, and route to at most two specialist lenses based only on screenshot evidence. If no specialist lens changes the next action, say so and use none.
+Run the app, capture before screenshots on desktop and mobile, inspect the rendered UI with actual Codex vision, record concrete observations, and route to at most two specialist lenses based only on screenshot evidence. If no specialist lens changes the next action, say so and use none.
 
 Fix the single highest-impact issue, capture matching after screenshots, and finish with the full Run Report Contract including viewport matrix, state matrix, accepted visual change, and automation notes.
 ```

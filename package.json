@@ -1,6 +1,6 @@
 {
   "name": "codex-visual-builder-guild",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "private": false,
   "description": "A free H70-C+ Spark Skill Graphs guild for Codex visual builder loops with imagegen and vision.",
   "type": "commonjs",
@@ -9,6 +9,7 @@
     "recommend-workflow": "node tools/recommend-workflow.cjs",
     "create-proof-packet": "node tools/create-proof-packet.cjs",
     "check-proof-packet": "node tools/check-proof-packet.cjs",
+    "score-proof-packet": "node tools/score-proof-packet.cjs",
     "scaffold:playwright-visual": "node tools/scaffold-playwright-visual.cjs",
     "audit:usage": "node tools/usage-audit.cjs",
     "validate": "node tools/validate-h70-cplus.js",
