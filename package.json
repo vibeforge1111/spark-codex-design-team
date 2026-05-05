@@ -1,0 +1,23 @@
+{
+  "name": "spark-codex-design-team",
+  "version": "1.0.0",
+  "private": false,
+  "description": "H70-C+ Spark Skill Graphs for Codex Desktop visual builder loops with imagegen and vision.",
+  "type": "commonjs",
+  "scripts": {
+    "validate": "node tools/validate-h70-cplus.js"
+  },
+  "keywords": [
+    "codex",
+    "spark-skill-graphs",
+    "h70-cplus",
+    "imagegen",
+    "vision",
+    "design",
+    "ui"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "yaml": "^2.8.1"
+  }
+}

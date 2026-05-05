@@ -1,0 +1,37 @@
+id: codex-visual-builder-loop
+name: Codex visual builder loop
+task_pattern: build or polish a visual product surface with Codex Desktop using imagegen, vision screenshots, responsive QA, interaction testing, and reusable design rules
+required_skills:
+  - visual-loop-qa
+  - imagegen-asset-director
+  - responsive-vision-auditor
+  - interaction-state-inspector
+  - brand-consistency-enforcer
+  - art-bible-extractor
+  - design-token-surgeon
+  - screenshot-regression-guard
+  - real-content-layout-fuzzer
+  - visual-accessibility-sentinel
+optional_skills:
+  - ab-visual-lab
+  - hero-image-cinematographer
+  - saas-dashboard-operator
+  - game-ui-polish
+  - motion-and-feedback-director
+  - asset-provenance-librarian
+load_order:
+  - visual-loop-qa                  # route the visual problem and define the screenshot matrix
+  - imagegen-asset-director          # create only the assets the rendered product needs
+  - responsive-vision-auditor        # inspect mobile, tablet, desktop, and wide layouts early
+  - interaction-state-inspector      # click through hover, focus, modal, loading, and error states
+  - real-content-layout-fuzzer       # stress the layout with long, empty, translated, and ugly content
+  - visual-accessibility-sentinel    # catch contrast, color-only, focus, tap-target, and motion failures
+  - brand-consistency-enforcer       # make the new surface feel native to the existing product
+  - art-bible-extractor              # capture winning visual rules from screenshots
+  - design-token-surgeon             # turn repeated visual decisions into tokens and component contracts
+  - screenshot-regression-guard      # preserve before/after baselines so future loops do not backslide
+notes: |
+  The core loop is evidence-first: build, run, screenshot, inspect with vision,
+  revise, and compare. Imagegen creates source material; vision judges the
+  rendered interface. The bundle is intentionally routed through visual-loop-qa
+  so narrow specialists do not all try to own the same design decision.
