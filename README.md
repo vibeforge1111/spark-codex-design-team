@@ -81,7 +81,7 @@ Expected result:
 - You get desktop and mobile screenshots.
 - The guild names the biggest visible problem.
 - Codex fixes one high-impact issue and screenshots the result.
-- The final answer includes what changed, what stayed weak, and where the screenshots live.
+- The final answer follows the Run Report Contract: goal, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, still weak, reusable rule.
 
 Want a disposable target? Open [`examples/first-run-demo`](examples/first-run-demo) and ask the guild to improve it.
 

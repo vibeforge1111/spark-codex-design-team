@@ -7,7 +7,7 @@ If you installed the native Codex skill with `npm run install:codex`, start prom
 ## Shortest Useful Prompt
 
 ```text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, then show before/after screenshot paths and what changed.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, then finish with the Run Report Contract: goal, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, still weak, reusable rule.
 ```
 
 ## Install Then Invoke
@@ -34,7 +34,7 @@ Use codex-visual-builder-guild on this app.
 
 Run it locally, take desktop and mobile screenshots, inspect the rendered UI with vision, name the top 3 visual issues, fix the highest-impact one, then capture after screenshots.
 
-End with a plain-English before/after summary and the screenshot paths.
+End with the Run Report Contract: goal, screenshots inspected with screenshot paths, top issues, chosen issue, lens used, exact fix, verification, still weak, reusable rule.
 ```
 
 Good output should include:

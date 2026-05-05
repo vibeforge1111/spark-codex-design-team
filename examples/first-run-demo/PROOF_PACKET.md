@@ -28,7 +28,23 @@ Expected flow:
 4. Pick one highest-impact issue.
 5. Fix it.
 6. Capture after screenshots.
-7. Report paths and a plain-English before/after summary.
+7. Finish with the Run Report Contract.
+
+## Run Report Contract
+
+Every useful run should answer:
+
+```text
+Goal:
+Screenshots inspected:
+Top issues:
+Chosen issue:
+Lens used:
+Exact fix:
+Verification:
+Still weak:
+Reusable rule:
+```
 
 ## Example Finding
 

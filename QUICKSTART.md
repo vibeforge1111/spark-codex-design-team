@@ -45,6 +45,24 @@ Good output includes:
 - what stayed weak
 - one reusable design rule
 
+## What Codex Must Report
+
+Every useful guild run should end with this compact report:
+
+```text
+Goal:
+Screenshots inspected:
+Top issues:
+Chosen issue:
+Lens used:
+Exact fix:
+Verification:
+Still weak:
+Reusable rule:
+```
+
+If the final answer does not include screenshot paths and a verification claim, the guild did not finish the loop.
+
 ## Want A Safe First Target?
 
 Use the disposable demo:

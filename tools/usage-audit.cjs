@@ -95,6 +95,7 @@ function assertInstallWorks() {
     assert(output.includes("Verified:"), "installer output should include verification summary");
     assert(output.includes("First 5-minute win prompt:"), "installer output should include first-run prompt");
     assert(output.includes("single highest-impact visual issue"), "installer prompt should bias toward one fast visible win");
+    assert(output.includes("Run Report Contract"), "installer prompt should require the run report contract");
   } finally {
     fs.rmSync(tempCodexHome, { recursive: true, force: true });
   }
@@ -144,7 +145,10 @@ for (const phrase of [
   "First 5-Minute Win",
   "top 3 visual issues",
   "screenshot paths",
-  "single highest-impact visual issue"
+  "single highest-impact visual issue",
+  "Run Report Contract",
+  "screenshots inspected",
+  "reusable rule"
 ]) {
   assert(prompts.includes(phrase), `PROMPTS should include first-run phrase: ${phrase}`);
 }
@@ -153,6 +157,8 @@ for (const phrase of [
   "30 Seconds: What It Does",
   "2 Minutes: Install It",
   "5 Minutes: Paste This",
+  "What Codex Must Report",
+  "Screenshots inspected:",
   "If you are unsure, choose Codex Desktop"
 ]) {
   assert(quickstart.includes(phrase), `QUICKSTART should include fast-start phrase: ${phrase}`);
@@ -173,6 +179,7 @@ for (const phrase of [
   "desktop and mobile screenshots",
   "intentional visual problems",
   "Minimum Useful Guild Pass",
+  "Run Report Contract",
   "What Success Looks Like"
 ]) {
   assert(demoText.includes(phrase), `first-run demo should include: ${phrase}`);
@@ -180,6 +187,13 @@ for (const phrase of [
 
 for (const phrase of [
   "Minimum Useful Pass",
+  "Run Report Contract",
+  "screenshots inspected",
+  "chosen issue",
+  "lens used",
+  "exact fix",
+  "still weak",
+  "reusable rule",
   "Specialist Output Contract",
   "problem",
   "evidence",
@@ -205,6 +219,7 @@ for (const phrase of [
 assert(openaiYaml.includes("default_prompt:"), "agents/openai.yaml should include default_prompt");
 assert(openaiYaml.includes("screenshot desktop and mobile"), "default prompt should preserve screenshot workflow");
 assert(openaiYaml.includes("single highest-impact visual issue"), "default prompt should bias toward a minimum useful pass");
+assert(openaiYaml.includes("Run Report Contract"), "default prompt should require the run report contract");
 assert(manifest.includes("tools/usage-audit.cjs"), "MANIFEST should list usage audit");
 assert(manifest.includes("QUICKSTART.md"), "MANIFEST should list quickstart");
 assert(manifest.includes("examples/first-run-demo/PROOF_PACKET.md"), "MANIFEST should list demo proof packet");

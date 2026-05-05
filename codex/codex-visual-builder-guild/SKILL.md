@@ -37,6 +37,22 @@ When the user is new, rushed, or coming from the public repo, do not invoke the 
 
 Only route to a specialist when that lens changes the next action.
 
+## Run Report Contract
+
+Every guild run must end with a compact report that proves the visual decision loop happened:
+
+- `goal`: the user-facing visual/product problem being solved.
+- `screenshots inspected`: before and after screenshot paths, with viewport names.
+- `top issues`: the top 3 visible issues found from screenshots.
+- `chosen issue`: the issue fixed first and why it was highest impact.
+- `lens used`: the specialist lens used, or `none` with a reason.
+- `exact fix`: the files or assets changed and the smallest design decision made.
+- `verification`: what the after screenshots prove.
+- `still weak`: what remains risky, confusing, or unproven.
+- `reusable rule`: one design rule future work should inherit.
+
+If screenshot paths or a verification claim are missing, the run is incomplete.
+
 ## Specialist Output Contract
 
 Every specialist lens should return concrete evidence, not ceremony:
@@ -72,6 +88,7 @@ Use these specialist lenses:
 
 - Prefer rendered evidence over taste arguments.
 - Start with the minimum useful pass unless the user explicitly asks for the full guild.
+- End with the Run Report Contract so the user can judge the work.
 - Use imagegen for real assets, not decorative filler.
 - Use vision to judge the integrated UI, not just the source image.
 - Fix the highest-impact visual issue first.
