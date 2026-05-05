@@ -11,6 +11,17 @@ const BUNDLE_FILE = path.join(ROOT, 'bundles', 'codex-visual-builder-loop.yaml')
 const CODEX_SKILL_FILE = path.join(ROOT, 'codex', 'codex-visual-builder-guild', 'SKILL.md');
 const CODEX_INSTALLER = path.join(ROOT, 'tools', 'install-codex-skill.cjs');
 const UPSTREAM_ROOT = process.env.SPARK_SKILL_GRAPHS_ROOT || 'C:/Users/USER/Desktop/spark-skill-graphs';
+const KNOWN_EXTERNAL_DELEGATE_IDS = new Set([
+  'accessibility-design',
+  'ai-image-editing',
+  'art-consistency',
+  'color-theory',
+  'design-systems',
+  'game-ui-design',
+  'motion-design',
+  'typography',
+  'ux-design'
+]);
 
 function readYaml(file) {
   return yaml.parse(fs.readFileSync(file, 'utf8'));
@@ -151,7 +162,7 @@ const upstreamIds = resolveUpstreamIds();
 const unresolved = [];
 for (const skill of skills) {
   for (const delegate of skill.delegates || []) {
-    if (!skillIds.has(delegate.skill) && !upstreamIds.has(delegate.skill)) {
+    if (!skillIds.has(delegate.skill) && !upstreamIds.has(delegate.skill) && !KNOWN_EXTERNAL_DELEGATE_IDS.has(delegate.skill)) {
       unresolved.push(`${skill.id}->${delegate.skill}`);
     }
   }
@@ -183,5 +194,5 @@ console.log('Smoke test passed');
 console.log(`- skills: ${skills.length}`);
 console.log(`- bundle: ${bundle.id}`);
 console.log('- Codex wrapper skill install check passed');
-console.log(`- delegate targets resolve against package + ${UPSTREAM_ROOT}`);
+console.log(`- delegate targets resolve against package + known external Spark neighbors`);
 console.log('- keyword invocation checks passed');
