@@ -122,11 +122,23 @@ $env:SPAWNER_H70_SKILLS_DIR='C:\Users\USER\Desktop\spark-skill-graphs\design'
 node C:\Users\USER\Desktop\spark-skill-graphs\tools\validate-h70-cplus.js
 ```
 
+If you use the Spark MCP server or dashboard, restart/re-index it after copying the files. Already-running MCP/dashboard processes may keep an older in-memory skill index and return `Skill not found` until they are restarted.
+
+Recommended Spark-side checks:
+
+```powershell
+npm run validate
+npm run validate:bundles
+npm run validate:v2
+node bin\sparkgraph.cjs recommend "Codex Desktop visual design loop with imagegen assets screenshots responsive vision QA interaction states screenshot regression" --limit 10
+```
+
 ## Validate This Package
 
 ```powershell
 npm install
 npm run validate
+npm run smoke
 ```
 
 Expected result:
@@ -136,6 +148,14 @@ Valid H70-C+: 16
 Invalid: 0
 With warnings: 0
 ```
+
+The smoke test checks that:
+
+- the bundle load order resolves
+- every `delegates_version: 2` contract has context and expected output
+- delegate targets resolve against the package plus a Spark Skill Graphs checkout
+- `visual-loop-qa` contains the practical Codex loop cues: run, screenshot, vision, delegate, recapture, before/after
+- keyword invocation routes common tasks to the expected specialists
 
 ## Design Principle
 

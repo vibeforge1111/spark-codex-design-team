@@ -5,7 +5,9 @@
   "description": "H70-C+ Spark Skill Graphs for Codex Desktop visual builder loops with imagegen and vision.",
   "type": "commonjs",
   "scripts": {
-    "validate": "node tools/validate-h70-cplus.js"
+    "validate": "node tools/validate-h70-cplus.js",
+    "smoke": "node tools/smoke-test.cjs",
+    "test": "npm run validate && npm run smoke"
   },
   "keywords": [
     "codex",
