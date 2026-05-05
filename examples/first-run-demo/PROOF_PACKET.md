@@ -36,14 +36,18 @@ Every useful run should answer:
 
 ```text
 Goal:
+Viewport matrix:
+State matrix:
 Screenshots inspected:
 Top issues:
 Chosen issue:
 Lens used:
 Exact fix:
 Verification:
+Accepted visual change:
 Still weak:
 Reusable rule:
+Automation notes:
 ```
 
 ## Example Finding
@@ -69,6 +73,7 @@ Screenshots:
 - screenshots/after-desktop.png
 - screenshots/after-mobile.png
 Reusable rule: proof areas need readable contrast before visual polish counts.
+Automation notes: manual screenshot pass only; no Playwright baseline added for the disposable demo.
 ```
 
 If the output only says "looks better" without screenshot paths, the loop did not do its job.

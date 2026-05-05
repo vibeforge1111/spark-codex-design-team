@@ -10,6 +10,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DESIGN_DIR = path.join(ROOT, "design");
 const README = path.join(ROOT, "README.md");
 const QUICKSTART = path.join(ROOT, "QUICKSTART.md");
+const WORKFLOW = path.join(ROOT, "WORKFLOW.md");
 const PROMPTS = path.join(ROOT, "PROMPTS.md");
 const FREE_DROP = path.join(ROOT, "FREE-DROP.md");
 const MANIFEST = path.join(ROOT, "MANIFEST.md");
@@ -95,7 +96,9 @@ function assertInstallWorks() {
     assert(output.includes("Verified:"), "installer output should include verification summary");
     assert(output.includes("First 5-minute win prompt:"), "installer output should include first-run prompt");
     assert(output.includes("single highest-impact visual issue"), "installer prompt should bias toward one fast visible win");
+    assert(output.includes("at most 1-2 specialist lenses"), "installer prompt should suppress specialist ceremony");
     assert(output.includes("Run Report Contract"), "installer prompt should require the run report contract");
+    assert(output.includes("automation notes"), "installer prompt should request automation notes");
   } finally {
     fs.rmSync(tempCodexHome, { recursive: true, force: true });
   }
@@ -105,6 +108,7 @@ const skills = loadSkills();
 const skillIds = skills.map(skill => skill.id).sort();
 const readme = read(README);
 const quickstart = read(QUICKSTART);
+const workflow = read(WORKFLOW);
 const freeDrop = read(FREE_DROP);
 const prompts = read(PROMPTS);
 const manifest = read(MANIFEST);
@@ -116,7 +120,7 @@ assert(skills.length === 16, `expected 16 design skills, found ${skills.length}`
 assert(packageJson.scripts?.["install:codex"] === "node tools/install-codex-skill.cjs", "package.json should expose install:codex");
 assert(packageJson.scripts?.["audit:usage"] === "node tools/usage-audit.cjs", "package.json should expose audit:usage");
 
-for (const file of [README, QUICKSTART, PROMPTS, FREE_DROP, MANIFEST, CODEX_SKILL, CODEX_OPENAI, INSTALLER, DEMO_README, DEMO_PROOF, DEMO_INDEX, DEMO_STYLES]) {
+for (const file of [README, QUICKSTART, WORKFLOW, PROMPTS, FREE_DROP, MANIFEST, CODEX_SKILL, CODEX_OPENAI, INSTALLER, DEMO_README, DEMO_PROOF, DEMO_INDEX, DEMO_STYLES]) {
   assert(fs.existsSync(file), `expected file to exist: ${path.relative(ROOT, file)}`);
 }
 
@@ -134,7 +138,8 @@ for (const phrase of [
   "First 5-Minute Win",
   "You do not need Spark Skill Graphs for the first win",
   "examples/first-run-demo",
-  "PROOF_PACKET.md"
+  "PROOF_PACKET.md",
+  "at most 1-2 specialist lenses"
 ]) {
   assert(readme.includes(phrase), `README should include install/invoke phrase: ${phrase}`);
   assert(prompts.includes(phrase) || phrase.startsWith("git clone") || phrase === "You do not need Spark Skill Graphs for the first win" || phrase === "examples/first-run-demo" || phrase === "PROOF_PACKET.md" || phrase === "30 Seconds, 2 Minutes, 5 Minutes", `PROMPTS should include invoke phrase: ${phrase}`);
@@ -147,7 +152,11 @@ for (const phrase of [
   "screenshot paths",
   "single highest-impact visual issue",
   "Run Report Contract",
+  "viewport matrix",
+  "state matrix",
   "screenshots inspected",
+  "accepted visual change",
+  "automation notes",
   "reusable rule"
 ]) {
   assert(prompts.includes(phrase), `PROMPTS should include first-run phrase: ${phrase}`);
@@ -158,10 +167,26 @@ for (const phrase of [
   "2 Minutes: Install It",
   "5 Minutes: Paste This",
   "What Codex Must Report",
+  "Lens Router",
   "Screenshots inspected:",
-  "If you are unsure, choose Codex Desktop"
+  "If you are unsure, choose Codex Desktop",
+  "lens used: none"
 ]) {
   assert(quickstart.includes(phrase), `QUICKSTART should include fast-start phrase: ${phrase}`);
+}
+
+for (const phrase of [
+  "Evidence-First Workflow",
+  "Minimum Useful Pass",
+  "Lens Router",
+  "Strong Proof Packet",
+  "Automation Recipes",
+  "Playwright Visual Baseline",
+  "Axe Accessibility Check",
+  "Performance And Visual Stability Note",
+  "Do not invoke many lenses just because they exist"
+]) {
+  assert(workflow.includes(phrase), `WORKFLOW should include benchmarked workflow phrase: ${phrase}`);
 }
 
 for (const phrase of [
@@ -188,12 +213,18 @@ for (const phrase of [
 for (const phrase of [
   "Minimum Useful Pass",
   "Run Report Contract",
+  "viewport matrix",
+  "state matrix",
   "screenshots inspected",
   "chosen issue",
   "lens used",
   "exact fix",
+  "accepted visual change",
   "still weak",
   "reusable rule",
+  "automation notes",
+  "Lens Router",
+  "at most 1-2 specialist lenses",
   "Specialist Output Contract",
   "problem",
   "evidence",
@@ -220,8 +251,11 @@ assert(openaiYaml.includes("default_prompt:"), "agents/openai.yaml should includ
 assert(openaiYaml.includes("screenshot desktop and mobile"), "default prompt should preserve screenshot workflow");
 assert(openaiYaml.includes("single highest-impact visual issue"), "default prompt should bias toward a minimum useful pass");
 assert(openaiYaml.includes("Run Report Contract"), "default prompt should require the run report contract");
+assert(openaiYaml.includes("at most 1-2 specialist lenses"), "default prompt should suppress specialist ceremony");
+assert(openaiYaml.includes("automation notes"), "default prompt should ask for automation notes");
 assert(manifest.includes("tools/usage-audit.cjs"), "MANIFEST should list usage audit");
 assert(manifest.includes("QUICKSTART.md"), "MANIFEST should list quickstart");
+assert(manifest.includes("WORKFLOW.md"), "MANIFEST should list workflow guide");
 assert(manifest.includes("examples/first-run-demo/PROOF_PACKET.md"), "MANIFEST should list demo proof packet");
 
 const routingQueries = [

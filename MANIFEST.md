@@ -15,6 +15,7 @@
 - `README.md`
 - `QUICKSTART.md`
 - `PROMPTS.md`
+- `WORKFLOW.md`
 - `FREE-DROP.md`
 - `MANIFEST.md`
 

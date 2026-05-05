@@ -6,7 +6,7 @@
 
 - Understand it in 30 seconds: Codex looks at real screenshots before judging UI quality.
 - Install it in 2 minutes: `npm run install:codex` installs and verifies the native Codex skill.
-- Get value in 5 minutes: paste the first-win prompt, fix one visible issue, and get before/after screenshot paths.
+- Get value in 5 minutes: paste the first-win prompt, fix one visible issue, use at most 1-2 lenses, and get before/after screenshot paths.
 
 Start with [`QUICKSTART.md`](QUICKSTART.md) if you are coming from X.
 
@@ -38,6 +38,7 @@ build -> run -> screenshot -> vision review -> imagegen/assets -> specialist del
 - Not locked to one hosted service.
 - Not a replacement for Spark Skill Graphs.
 - Not magic without screenshots. The whole point is rendered evidence.
+- Not an invitation to summon every specialist. Most useful runs should stay small.
 
 ## Community Rule
 

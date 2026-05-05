@@ -24,7 +24,7 @@ npm install
 npm run install:codex
 ```
 
-**In 5 minutes:** restart Codex Desktop, open your app, and paste the [first-win prompt](#your-first-5-minute-win). Codex should return before/after screenshots, the biggest visual issue, the fix, and what still needs work.
+**In 5 minutes:** restart Codex Desktop, open your app, and paste the [first-win prompt](#your-first-5-minute-win). Codex should return before/after screenshots, the biggest visual issue, the fix, what still needs work, and whether any specialist lens was actually useful.
 
 For the shortest path, read [`QUICKSTART.md`](QUICKSTART.md).
 
@@ -63,6 +63,8 @@ Use codex-visual-builder-guild to run the visual builder loop on this app.
 
 That gives Codex one easy skill to invoke. The wrapper skill knows the full 16-specialist guild and can route work through the right specialist lens.
 
+The default is intentionally small: one visible win first, at most 1-2 specialist lenses, and screenshot proof before claims.
+
 ## Your First 5-Minute Win
 
 Use this when you want proof that the guild works, not a long design ceremony:
@@ -80,8 +82,9 @@ Expected result:
 - Codex runs the app instead of guessing from source code.
 - You get desktop and mobile screenshots.
 - The guild names the biggest visible problem.
+- The guild uses at most 1-2 specialist lenses unless screenshots prove more are needed.
 - Codex fixes one high-impact issue and screenshots the result.
-- The final answer follows the Run Report Contract: goal, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, still weak, reusable rule.
+- The final answer follows the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
 
 Want a disposable target? Open [`examples/first-run-demo`](examples/first-run-demo) and ask the guild to improve it.
 
@@ -124,6 +127,20 @@ Do not stop at the first draft. Iterate until the UI feels polished, compare bef
 
 More copy-paste prompts live in [PROMPTS.md](PROMPTS.md).
 
+## No-Ceremony Workflow
+
+The best dogfood runs showed that the guild helps most when it behaves like a compact visual QA loop, not a parade of roles.
+
+Use this order:
+
+1. Start with the minimum useful pass.
+2. Route to a specialist only when screenshot evidence proves the failure class.
+3. Fix one high-impact issue.
+4. Preserve before/after screenshots.
+5. Leave a proof packet another builder can inspect.
+
+See [`WORKFLOW.md`](WORKFLOW.md) for the lens router, stronger proof packet, and optional Playwright, Storybook/Chromatic, axe, and Web Vitals recipes.
+
 ## How It Works
 
 ![How it works](assets/how-it-works.png)
@@ -142,7 +159,7 @@ Imagegen creates source material. Vision judges the real interface. Specialist l
 
 ## Summon The Right Specialist
 
-Use the full guild prompt when you want the whole team. Use a specialist lens when you already know the problem.
+Use the full guild prompt when you want the whole team. Use a specialist lens when you already know the problem. For most runs, start with `visual-loop-qa` and route to at most two lenses.
 
 | If you want... | Summon... | Prompt starter |
 | --- | --- | --- |

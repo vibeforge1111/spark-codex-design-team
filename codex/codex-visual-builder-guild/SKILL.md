@@ -37,19 +37,41 @@ When the user is new, rushed, or coming from the public repo, do not invoke the 
 
 Only route to a specialist when that lens changes the next action.
 
+## Lens Router
+
+Default to `visual-loop-qa` plus at most 1-2 specialist lenses. Route by rendered evidence:
+
+| Evidence from screenshot or interaction | Lens |
+| --- | --- |
+| mobile crop, hidden controls, cramped taps, broken wrapping | `responsive-vision-auditor` |
+| dashboard is pretty but not useful for repeated operation | `saas-dashboard-operator` |
+| hover, focus, modal, loading, empty, disabled, or error state is unknown | `interaction-state-inspector` |
+| contrast, focus visibility, tap target, or color-only meaning is risky | `visual-accessibility-sentinel` |
+| long content, empty data, huge numbers, missing images, or ugly real data breaks layout | `real-content-layout-fuzzer` |
+| generated/external asset quality matters to the UI | `imagegen-asset-director` |
+| visual change should become a baseline | `screenshot-regression-guard` |
+| repeated styling choices are drifting | `brand-consistency-enforcer` or `design-token-surgeon` |
+| multiple strong visual directions exist | `ab-visual-lab` |
+
+If no row applies, use `lens used: none - minimum useful pass was enough`.
+
 ## Run Report Contract
 
 Every guild run must end with a compact report that proves the visual decision loop happened:
 
 - `goal`: the user-facing visual/product problem being solved.
+- `viewport matrix`: desktop/mobile/tablet/wide coverage, or `not checked`.
+- `state matrix`: default/hover/focus/loading/empty/error coverage, or `not checked`.
 - `screenshots inspected`: before and after screenshot paths, with viewport names.
 - `top issues`: the top 3 visible issues found from screenshots.
 - `chosen issue`: the issue fixed first and why it was highest impact.
 - `lens used`: the specialist lens used, or `none` with a reason.
 - `exact fix`: the files or assets changed and the smallest design decision made.
 - `verification`: what the after screenshots prove.
+- `accepted visual change`: the intentional before/after difference to preserve.
 - `still weak`: what remains risky, confusing, or unproven.
 - `reusable rule`: one design rule future work should inherit.
+- `automation notes`: manual-only, Playwright screenshot baseline, axe check, Storybook/Chromatic, Lighthouse/Web Vitals, or project-specific check.
 
 If screenshot paths or a verification claim are missing, the run is incomplete.
 
@@ -88,6 +110,7 @@ Use these specialist lenses:
 
 - Prefer rendered evidence over taste arguments.
 - Start with the minimum useful pass unless the user explicitly asks for the full guild.
+- Use at most 1-2 specialist lenses unless screenshots prove more are needed.
 - End with the Run Report Contract so the user can judge the work.
 - Use imagegen for real assets, not decorative filler.
 - Use vision to judge the integrated UI, not just the source image.

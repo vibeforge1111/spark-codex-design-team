@@ -39,11 +39,13 @@ Good output includes:
 
 - first desktop and mobile screenshots
 - the top visible issue
+- at most 1-2 specialist lenses, only when screenshot evidence justifies them
 - the fix that was made
 - after screenshots
 - what improved
 - what stayed weak
 - one reusable design rule
+- automation notes saying whether this was manual-only or protected by a project check
 
 ## What Codex Must Report
 
@@ -51,17 +53,35 @@ Every useful guild run should end with this compact report:
 
 ```text
 Goal:
+Viewport matrix:
+State matrix:
 Screenshots inspected:
 Top issues:
 Chosen issue:
 Lens used:
 Exact fix:
 Verification:
+Accepted visual change:
 Still weak:
 Reusable rule:
+Automation notes:
 ```
 
 If the final answer does not include screenshot paths and a verification claim, the guild did not finish the loop.
+
+## Lens Router
+
+Do not summon the whole guild by default. Start with the minimum useful pass, then add a specialist only when the screenshot proves a specific failure:
+
+- mobile or tablet breakage: `responsive-vision-auditor`
+- dashboard is pretty but not operationally useful: `saas-dashboard-operator`
+- hover, focus, modal, loading, empty, or error states: `interaction-state-inspector`
+- contrast, focus, target size, or color-only meaning: `visual-accessibility-sentinel`
+- ugly real data breaks layout: `real-content-layout-fuzzer`
+- generated assets matter to the UI: `imagegen-asset-director`
+- baseline or regression proof is needed: `screenshot-regression-guard`
+
+If no specialist changes the next action, the correct answer is `lens used: none`.
 
 ## Want A Safe First Target?
 

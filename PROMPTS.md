@@ -7,7 +7,7 @@ If you installed the native Codex skill with `npm run install:codex`, start prom
 ## Shortest Useful Prompt
 
 ```text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, then finish with the Run Report Contract: goal, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, still weak, reusable rule.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, use at most 1-2 specialist lenses only if screenshots prove they are needed, then finish with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
 ```
 
 ## Install Then Invoke
@@ -34,16 +34,51 @@ Use codex-visual-builder-guild on this app.
 
 Run it locally, take desktop and mobile screenshots, inspect the rendered UI with vision, name the top 3 visual issues, fix the highest-impact one, then capture after screenshots.
 
-End with the Run Report Contract: goal, screenshots inspected with screenshot paths, top issues, chosen issue, lens used, exact fix, verification, still weak, reusable rule.
+End with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected with screenshot paths, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
 ```
 
 Good output should include:
 
 - the first desktop and mobile screenshots
 - the highest-impact issue chosen
-- the specialist lens used only if it helped the fix
+- the specialist lens used only if it helped the fix; otherwise `lens used: none`
 - the after screenshots
 - what improved, what stayed weak, and one reusable design rule
+- automation notes saying whether this was manual-only or protected by Playwright, axe, Storybook/Chromatic, Lighthouse, or a project-local check
+
+## No-Ceremony Routed Pass
+
+Use this after the first run, or when you know the guild was getting too theatrical.
+
+```text
+Use codex-visual-builder-guild on this app as a no-ceremony visual QA pass.
+
+Run the app, capture before screenshots on desktop and mobile, inspect the rendered UI, and route to at most two specialist lenses based only on screenshot evidence. If no specialist lens changes the next action, say so and use none.
+
+Fix the single highest-impact issue, capture matching after screenshots, and finish with the full Run Report Contract including viewport matrix, state matrix, accepted visual change, and automation notes.
+```
+
+## Regression Hardening Pass
+
+Use this when a screen became important enough to protect.
+
+```text
+Use codex-visual-builder-guild with the screenshot-regression-guard lens.
+
+Run the app, capture stable before screenshots for the important viewport and state matrix, identify volatile elements that should be masked or excluded, then add the smallest project-local visual regression recipe that fits this repo. Prefer Playwright toHaveScreenshot if Playwright is already installed; otherwise document the manual screenshot baseline path.
+
+Verify the check or explain why it stayed manual. Finish with screenshot paths, accepted visual change, and automation notes.
+```
+
+## Accessibility Evidence Pass
+
+```text
+Use codex-visual-builder-guild with the visual-accessibility-sentinel lens.
+
+Inspect the rendered UI for contrast, focus visibility, keyboard reachability, tap targets, color-only meaning, and motion risk. If Playwright and axe are already available, run or add a minimal axe check for the relevant page state. Do not claim full accessibility from automated checks alone.
+
+Finish with screenshot paths, any automated accessibility result, remaining manual risks, and the reusable rule.
+```
 
 ## Full Guild
 
@@ -52,9 +87,9 @@ Use codex-visual-builder-guild as a visual product team.
 
 Goal: [describe what we are building].
 
-Run the app locally, take screenshots on desktop and mobile, inspect the rendered UI with vision, and delegate issues to the right specialists. Use imagegen when custom assets would improve the product. Focus on hierarchy, spacing, contrast, text fit, responsive layout, interaction states, accessibility, and visual consistency.
+Run the app locally, take screenshots on desktop and mobile, inspect the rendered UI with vision, and delegate issues to the right specialists. Use at most 1-2 specialist lenses unless screenshot evidence proves more are needed. Use imagegen when custom assets would improve the product. Focus on hierarchy, spacing, contrast, text fit, responsive layout, interaction states, accessibility, and visual consistency.
 
-Do not stop at the first draft. Iterate until the UI feels polished, compare before/after screenshots, and summarize the final design rules.
+Do not stop at the first draft. Iterate until the UI feels polished, compare before/after screenshots, and summarize the final design rules plus any automation notes.
 ```
 
 ## First Draft To Polished UI
