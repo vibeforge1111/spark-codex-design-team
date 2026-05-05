@@ -41,6 +41,14 @@ Build the smallest working version, open it locally, screenshot desktop and mobi
 Finish only after the before/after screenshots show a clearly more polished product.
 ```
 
+## Visual Loop QA
+
+```text
+Use codex-visual-builder-guild with the visual-loop-qa lens.
+
+Run the app, capture screenshots on desktop and mobile, inspect the rendered UI with vision, identify the highest-impact visual issues, delegate each issue to the right specialist lens, apply fixes, and compare before/after screenshots before finishing.
+```
+
 ## Imagegen Asset Direction
 
 ```text

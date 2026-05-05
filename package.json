@@ -1,14 +1,15 @@
 {
   "name": "codex-visual-builder-guild",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "description": "A free H70-C+ Spark Skill Graphs guild for Codex visual builder loops with imagegen and vision.",
   "type": "commonjs",
   "scripts": {
     "install:codex": "node tools/install-codex-skill.cjs",
+    "audit:usage": "node tools/usage-audit.cjs",
     "validate": "node tools/validate-h70-cplus.js",
     "smoke": "node tools/smoke-test.cjs",
-    "test": "npm run validate && npm run smoke"
+    "test": "npm run validate && npm run smoke && npm run audit:usage"
   },
   "keywords": [
     "codex",

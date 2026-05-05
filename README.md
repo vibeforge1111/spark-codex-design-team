@@ -185,6 +185,7 @@ This package includes local checks for the parts that matter most:
 - delegate contract completeness
 - bundle load order resolution
 - common Codex visual-loop invocation cues
+- Codex wrapper install and invocation coverage
 
 Validate this package:
 
@@ -200,6 +201,7 @@ Valid H70-C+: 16
 Invalid: 0
 With warnings: 0
 Smoke test passed
+Usage audit passed
 ```
 
 ## What Is Inside
@@ -209,6 +211,7 @@ Smoke test passed
 - `bundles/codex-visual-builder-loop.yaml`: recommended guild load order
 - `tools/validate-h70-cplus.js`: H70-C+ structure validator
 - `tools/smoke-test.cjs`: practical package smoke test
+- `tools/usage-audit.cjs`: Codex install and invocation coverage audit
 - `tools/install-codex-skill.cjs`: one-command Codex skill installer
 - `PROMPTS.md`: copy-paste prompts for the whole guild and each specialist
 - `assets/*.png`: README and X-ready visual explainers
