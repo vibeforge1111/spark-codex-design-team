@@ -2,6 +2,8 @@
 
 H70-C+ Spark Skill Graphs for Codex Desktop visual product building.
 
+Free community drop. MIT licensed. Fork it, remix it, copy the skills into your own Spark graph, or use the YAML directly in your own agent runtime.
+
 This pack turns the imagegen plus vision workflow into a disciplined specialist team:
 
 ```text
@@ -37,6 +39,71 @@ Imagegen creates source material. Vision judges the rendered product. The skills
 - `game-ui-polish`
 - `motion-and-feedback-director`
 - `asset-provenance-librarian`
+
+## How The Team Communicates
+
+The skills communicate through H70-C+ `delegates_version: 2` contracts. Each delegate edge says:
+
+- `skill`: which specialist should take the next slice of work
+- `when`: the trigger condition for handing off
+- `pass_context`: what the current skill must send forward
+- `expect_back`: what the delegated skill must return
+- `sla`: whether the handoff is expected to be synchronous or async
+
+The core routing model is hub-and-specialist:
+
+```mermaid
+flowchart TD
+  V["visual-loop-qa"]
+  V --> Asset["imagegen-asset-director"]
+  V --> Resp["responsive-vision-auditor"]
+  V --> State["interaction-state-inspector"]
+  V --> Brand["brand-consistency-enforcer"]
+  V --> Bible["art-bible-extractor"]
+  V --> Tokens["design-token-surgeon"]
+  V --> Regress["screenshot-regression-guard"]
+  V --> Fuzz["real-content-layout-fuzzer"]
+  V --> A11y["visual-accessibility-sentinel"]
+
+  Asset --> Provenance["asset-provenance-librarian"]
+  State --> Motion["motion-and-feedback-director"]
+  Bible --> Tokens
+  Fuzz --> Resp
+  A11y --> State
+```
+
+`visual-loop-qa` owns orchestration and final visual judgment. It routes narrow problems to specialists, then brings their findings back into the screenshot loop. This prevents every skill from trying to own the whole design decision.
+
+## Standalone Usage
+
+Yes, the skills can be used standalone.
+
+You can load any file in `design/*.yaml` directly into an agent, prompt system, CLI tool, or custom runtime. The YAML is self-contained: identity, responsibilities, disasters, anti-patterns, production patterns, testing, decisions, recovery, examples, gotchas, and delegation contracts all live in each skill file.
+
+For standalone use:
+
+1. Start with `design/visual-loop-qa.yaml`.
+2. Read its `delegates` list to decide which specialist should handle the next failure class.
+3. Pass the fields listed in `pass_context`.
+4. Require the delegated skill to return the fields listed in `expect_back`.
+5. Use the bundle load order when you want the whole team.
+
+No hosted service is required for standalone use.
+
+## Spark Skill Graphs Dashboard Usage
+
+Yes, the same repo can also work as a system inside Spark Skill Graphs and the dashboard.
+
+When copied into a Spark Skill Graphs checkout:
+
+- `design/*.yaml` become graph nodes.
+- `delegates` become graph edges.
+- `bundles/codex-visual-builder-loop.yaml` becomes the recommended team load order.
+- `visual-loop-qa` appears as the router node for Codex visual builder work.
+- Spark recommendation can select either a single specialist or the full bundle.
+- The dashboard/visualizer can show the loaded skills and their delegate relationships as one system.
+
+In other words: standalone mode reads the YAML directly; Spark mode indexes the same YAML into a navigable skill graph.
 
 ## Install Into Spark Skill Graphs
 
