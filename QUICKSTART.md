@@ -69,6 +69,25 @@ Automation notes:
 
 If the final answer does not include screenshot paths and a verification claim, the guild did not finish the loop.
 
+To create a fill-in proof packet before the run:
+
+```powershell
+npm run recommend-workflow -- --need "dashboard mobile regression"
+npm run create-proof-packet -- --cwd ../my-app
+```
+
+After the run, validate that the packet is not just a blank ritual:
+
+```powershell
+npm run check-proof-packet -- --cwd ../my-app
+```
+
+If the screen is important enough to protect with a repeatable screenshot check:
+
+```powershell
+npm run scaffold:playwright-visual -- --cwd ../my-app --url http://127.0.0.1:5173 --name dashboard
+```
+
 ## Lens Router
 
 Do not summon the whole guild by default. Start with the minimum useful pass, then add a specialist only when the screenshot proves a specific failure:

@@ -18,6 +18,10 @@ const PACKAGE_JSON = path.join(ROOT, "package.json");
 const CODEX_SKILL = path.join(ROOT, "codex", "codex-visual-builder-guild", "SKILL.md");
 const CODEX_OPENAI = path.join(ROOT, "codex", "codex-visual-builder-guild", "agents", "openai.yaml");
 const INSTALLER = path.join(ROOT, "tools", "install-codex-skill.cjs");
+const WORKFLOW_RECOMMENDER = path.join(ROOT, "tools", "recommend-workflow.cjs");
+const PROOF_PACKET_TOOL = path.join(ROOT, "tools", "create-proof-packet.cjs");
+const PROOF_PACKET_CHECKER = path.join(ROOT, "tools", "check-proof-packet.cjs");
+const PLAYWRIGHT_SCAFFOLD_TOOL = path.join(ROOT, "tools", "scaffold-playwright-visual.cjs");
 const DEMO_README = path.join(ROOT, "examples", "first-run-demo", "README.md");
 const DEMO_PROOF = path.join(ROOT, "examples", "first-run-demo", "PROOF_PACKET.md");
 const DEMO_INDEX = path.join(ROOT, "examples", "first-run-demo", "index.html");
@@ -104,6 +108,76 @@ function assertInstallWorks() {
   }
 }
 
+function assertScaffoldToolsWork() {
+  const tempProject = fs.mkdtempSync(path.join(os.tmpdir(), "cvbg-scaffold-audit-"));
+  try {
+    const proofOut = path.join("artifacts", "visual-guild", "PROOF_PACKET.md");
+    execFileSync(process.execPath, [PROOF_PACKET_TOOL, "--cwd", tempProject, "--out", proofOut, "--goal", "Audit the dashboard command surface."], {
+      cwd: ROOT,
+      encoding: "utf8",
+      stdio: "pipe"
+    });
+    const proofPath = path.join(tempProject, proofOut);
+    assert(fs.existsSync(proofPath), "create-proof-packet should create the requested proof packet");
+    const proofText = read(proofPath);
+    assert(proofText.includes("Audit the dashboard command surface."), "proof packet should include the requested goal");
+    assert(proofText.includes("Viewport matrix:"), "proof packet should include viewport matrix");
+    assert(proofText.includes("Automation notes:"), "proof packet should include automation notes");
+    fs.mkdirSync(path.join(tempProject, "artifacts", "visual-guild"), { recursive: true });
+    fs.writeFileSync(path.join(tempProject, "artifacts", "visual-guild", "before-desktop.png"), "fake", "utf8");
+    fs.writeFileSync(path.join(tempProject, "artifacts", "visual-guild", "after-desktop.png"), "fake", "utf8");
+    fs.writeFileSync(proofPath, `# Visual Guild Proof Packet
+
+Goal: Audit the dashboard command surface.
+Viewport matrix: desktop before and after checked.
+State matrix: default state checked; interaction states not checked for this pass.
+Screenshots inspected: artifacts/visual-guild/before-desktop.png and artifacts/visual-guild/after-desktop.png
+Top issues: missing command surface, weak mobile summary, long evidence lists.
+Chosen issue: add command surface because it changes the first five seconds.
+Lens used: saas-dashboard-operator.
+Exact fix: added command spine above evidence lists.
+Verification: after screenshot shows trust status, next fix, and vitals above the fold.
+Accepted visual change: new command spine is intentionally visible before Good/Bad/Ugly.
+Still weak: lower evidence sections remain long.
+Reusable rule: dashboards must answer the operator question before showing raw evidence.
+Automation notes: manual screenshot pass only.
+`, "utf8");
+    execFileSync(process.execPath, [PROOF_PACKET_CHECKER, "--cwd", tempProject, "--file", proofOut], {
+      cwd: ROOT,
+      encoding: "utf8",
+      stdio: "pipe"
+    });
+
+    execFileSync(process.execPath, [PLAYWRIGHT_SCAFFOLD_TOOL, "--cwd", tempProject, "--url", "http://127.0.0.1:5173/#agent", "--name", "agent-dashboard"], {
+      cwd: ROOT,
+      encoding: "utf8",
+      stdio: "pipe"
+    });
+    const specPath = path.join(tempProject, "tests", "visual", "agent-dashboard.spec.ts");
+    const maskPath = path.join(tempProject, "tests", "visual", "visual-baseline-mask.css");
+    assert(fs.existsSync(specPath), "scaffold:playwright-visual should create a visual spec");
+    assert(fs.existsSync(maskPath), "scaffold:playwright-visual should create a mask stylesheet");
+    const specText = read(specPath);
+    assert(specText.includes("toHaveScreenshot"), "visual spec should use Playwright screenshot comparison");
+    assert(specText.includes("http://127.0.0.1:5173/#agent"), "visual spec should include requested URL");
+    assert(specText.includes("visual-baseline-mask.css"), "visual spec should reference the mask stylesheet");
+  } finally {
+    fs.rmSync(tempProject, { recursive: true, force: true });
+  }
+}
+
+function assertWorkflowRecommenderWorks() {
+  const output = execFileSync(process.execPath, [WORKFLOW_RECOMMENDER, "--need", "dashboard mobile regression"], {
+    cwd: ROOT,
+    encoding: "utf8",
+    stdio: "pipe"
+  });
+  assert(output.includes("Recommended Visual Builder Guild workflow"), "workflow recommender should print a heading");
+  assert(output.includes("SaaS/admin/dashboard operation"), "workflow recommender should route dashboard needs");
+  assert(output.includes("Mobile and responsive confidence"), "workflow recommender should route mobile needs");
+  assert(output.includes("Regression-sensitive visual baseline"), "workflow recommender should route regression needs");
+}
+
 const skills = loadSkills();
 const skillIds = skills.map(skill => skill.id).sort();
 const readme = read(README);
@@ -118,9 +192,13 @@ const packageJson = JSON.parse(read(PACKAGE_JSON));
 
 assert(skills.length === 16, `expected 16 design skills, found ${skills.length}`);
 assert(packageJson.scripts?.["install:codex"] === "node tools/install-codex-skill.cjs", "package.json should expose install:codex");
+assert(packageJson.scripts?.["recommend-workflow"] === "node tools/recommend-workflow.cjs", "package.json should expose recommend-workflow");
+assert(packageJson.scripts?.["create-proof-packet"] === "node tools/create-proof-packet.cjs", "package.json should expose create-proof-packet");
+assert(packageJson.scripts?.["check-proof-packet"] === "node tools/check-proof-packet.cjs", "package.json should expose check-proof-packet");
+assert(packageJson.scripts?.["scaffold:playwright-visual"] === "node tools/scaffold-playwright-visual.cjs", "package.json should expose scaffold:playwright-visual");
 assert(packageJson.scripts?.["audit:usage"] === "node tools/usage-audit.cjs", "package.json should expose audit:usage");
 
-for (const file of [README, QUICKSTART, WORKFLOW, PROMPTS, FREE_DROP, MANIFEST, CODEX_SKILL, CODEX_OPENAI, INSTALLER, DEMO_README, DEMO_PROOF, DEMO_INDEX, DEMO_STYLES]) {
+for (const file of [README, QUICKSTART, WORKFLOW, PROMPTS, FREE_DROP, MANIFEST, CODEX_SKILL, CODEX_OPENAI, INSTALLER, WORKFLOW_RECOMMENDER, PROOF_PACKET_TOOL, PROOF_PACKET_CHECKER, PLAYWRIGHT_SCAFFOLD_TOOL, DEMO_README, DEMO_PROOF, DEMO_INDEX, DEMO_STYLES]) {
   assert(fs.existsSync(file), `expected file to exist: ${path.relative(ROOT, file)}`);
 }
 
@@ -139,7 +217,11 @@ for (const phrase of [
   "You do not need Spark Skill Graphs for the first win",
   "examples/first-run-demo",
   "PROOF_PACKET.md",
-  "at most 1-2 specialist lenses"
+  "at most 1-2 specialist lenses",
+  "npm run recommend-workflow",
+  "npm run create-proof-packet",
+  "npm run check-proof-packet",
+  "npm run scaffold:playwright-visual"
 ]) {
   assert(readme.includes(phrase), `README should include install/invoke phrase: ${phrase}`);
   assert(prompts.includes(phrase) || phrase.startsWith("git clone") || phrase === "You do not need Spark Skill Graphs for the first win" || phrase === "examples/first-run-demo" || phrase === "PROOF_PACKET.md" || phrase === "30 Seconds, 2 Minutes, 5 Minutes", `PROMPTS should include invoke phrase: ${phrase}`);
@@ -180,7 +262,12 @@ for (const phrase of [
   "Minimum Useful Pass",
   "Lens Router",
   "Strong Proof Packet",
+  "Workflow Needs Matrix",
+  "npm run recommend-workflow",
   "Automation Recipes",
+  "npm run create-proof-packet",
+  "npm run check-proof-packet",
+  "npm run scaffold:playwright-visual",
   "Playwright Visual Baseline",
   "Axe Accessibility Check",
   "Performance And Visual Stability Note",
@@ -254,6 +341,10 @@ assert(openaiYaml.includes("Run Report Contract"), "default prompt should requir
 assert(openaiYaml.includes("at most 1-2 specialist lenses"), "default prompt should suppress specialist ceremony");
 assert(openaiYaml.includes("automation notes"), "default prompt should ask for automation notes");
 assert(manifest.includes("tools/usage-audit.cjs"), "MANIFEST should list usage audit");
+assert(manifest.includes("tools/recommend-workflow.cjs"), "MANIFEST should list workflow recommender");
+assert(manifest.includes("tools/create-proof-packet.cjs"), "MANIFEST should list proof packet scaffold tool");
+assert(manifest.includes("tools/check-proof-packet.cjs"), "MANIFEST should list proof packet checker");
+assert(manifest.includes("tools/scaffold-playwright-visual.cjs"), "MANIFEST should list Playwright scaffold tool");
 assert(manifest.includes("QUICKSTART.md"), "MANIFEST should list quickstart");
 assert(manifest.includes("WORKFLOW.md"), "MANIFEST should list workflow guide");
 assert(manifest.includes("examples/first-run-demo/PROOF_PACKET.md"), "MANIFEST should list demo proof packet");
@@ -286,6 +377,8 @@ for (const [query, expectedId] of routingQueries) {
 }
 
 assertInstallWorks();
+assertWorkflowRecommenderWorks();
+assertScaffoldToolsWork();
 
 if (failures > 0) {
   console.error(`Usage audit failed with ${failures} failure(s)`);
@@ -298,5 +391,7 @@ console.log("- README install path verified");
 console.log("- PROMPTS specialist spellbook verified");
 console.log("- Codex wrapper trigger and metadata verified");
 console.log("- installer overwrite/idempotence verified in temp CODEX_HOME");
+console.log("- workflow recommender verified");
+console.log("- proof packet and Playwright visual scaffold tools verified");
 console.log("- keyword routing checks passed for all 16 specialists");
 console.log("- beginner first-run, quickstart, proof packet, and demo app coverage verified");

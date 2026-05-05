@@ -46,6 +46,14 @@ Good output should include:
 - what improved, what stayed weak, and one reusable design rule
 - automation notes saying whether this was manual-only or protected by Playwright, axe, Storybook/Chromatic, Lighthouse, or a project-local check
 
+Optional scaffold before the run:
+
+```powershell
+npm run recommend-workflow -- --need "first demo polish"
+npm run create-proof-packet -- --cwd ../my-app
+npm run check-proof-packet -- --cwd ../my-app
+```
+
 ## No-Ceremony Routed Pass
 
 Use this after the first run, or when you know the guild was getting too theatrical.
@@ -68,6 +76,12 @@ Use codex-visual-builder-guild with the screenshot-regression-guard lens.
 Run the app, capture stable before screenshots for the important viewport and state matrix, identify volatile elements that should be masked or excluded, then add the smallest project-local visual regression recipe that fits this repo. Prefer Playwright toHaveScreenshot if Playwright is already installed; otherwise document the manual screenshot baseline path.
 
 Verify the check or explain why it stayed manual. Finish with screenshot paths, accepted visual change, and automation notes.
+```
+
+Optional scaffold before asking Codex:
+
+```powershell
+npm run scaffold:playwright-visual -- --cwd ../my-app --url http://127.0.0.1:5173 --name dashboard
 ```
 
 ## Accessibility Evidence Pass

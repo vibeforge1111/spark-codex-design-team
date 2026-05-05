@@ -7,6 +7,7 @@
 - Understand it in 30 seconds: Codex looks at real screenshots before judging UI quality.
 - Install it in 2 minutes: `npm run install:codex` installs and verifies the native Codex skill.
 - Get value in 5 minutes: paste the first-win prompt, fix one visible issue, use at most 1-2 lenses, and get before/after screenshot paths.
+- Preserve the evidence: `npm run recommend-workflow`, `npm run create-proof-packet`, `npm run check-proof-packet`, and `npm run scaffold:playwright-visual` route, create, and verify starter artifacts when a screen becomes important.
 
 Start with [`QUICKSTART.md`](QUICKSTART.md) if you are coming from X.
 

@@ -34,9 +34,45 @@ Start with `visual-loop-qa`, then route only when the screenshot proves a specif
 
 If no row applies, do not invoke a specialist. Say `lens used: none - minimum useful pass was enough`.
 
+## Workflow Needs Matrix
+
+Different builders need different proof. Pick the smallest lane that matches the job.
+
+Ask the repo for a recommendation:
+
+```powershell
+npm run recommend-workflow -- --need "dashboard mobile regression"
+```
+
+| Need | Default output | Extra proof when it matters |
+| --- | --- | --- |
+| first public demo polish | before/after desktop + mobile screenshots | proof packet checked with `npm run check-proof-packet` |
+| SaaS/admin/dashboard work | command surface, scannable metrics, clear next action | `saas-dashboard-operator` plus real-content stress |
+| mobile reliability | mobile screenshot before/after and tap-target review | tablet/wide matrix if layout has breakpoints |
+| component library work | state matrix for component states | Storybook/Chromatic visual review |
+| accessibility confidence | contrast/focus/tap/color review | axe check plus manual focus screenshot |
+| generated visual assets | asset in the real UI, not isolated | asset provenance notes and replacement guidance |
+| messy production data | long labels, empty states, large numbers | `real-content-layout-fuzzer` cases preserved |
+| regression-sensitive screen | accepted visual change recorded | Playwright `toHaveScreenshot` scaffold |
+| performance-sensitive visual change | loading/interactivity/visual stability note | Lighthouse/Web Vitals or project-local perf check |
+
+If the output is only a prettier screenshot with no proof lane, the workflow failed.
+
 ## Strong Proof Packet
 
 Every serious run should leave a proof packet that another builder can inspect.
+
+Create the starter file from this repo:
+
+```powershell
+npm run create-proof-packet -- --cwd ../my-app
+```
+
+After the run, check that the packet has real fields and screenshot paths:
+
+```powershell
+npm run check-proof-packet -- --cwd ../my-app
+```
 
 ```text
 Goal:
@@ -63,6 +99,12 @@ These are optional. They are for teams that want the guild's Codex loop to becom
 ### Playwright Visual Baseline
 
 Use when a screen is important enough to protect from accidental regressions.
+
+Scaffold a starter test from this repo:
+
+```powershell
+npm run scaffold:playwright-visual -- --cwd ../my-app --url http://127.0.0.1:5173 --name dashboard
+```
 
 ```ts
 import { expect, test } from '@playwright/test';

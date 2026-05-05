@@ -141,6 +141,15 @@ Use this order:
 
 See [`WORKFLOW.md`](WORKFLOW.md) for the lens router, stronger proof packet, and optional Playwright, Storybook/Chromatic, axe, and Web Vitals recipes.
 
+You can also scaffold the proof artifacts:
+
+```powershell
+npm run recommend-workflow -- --need "dashboard mobile regression"
+npm run create-proof-packet -- --cwd ../my-app
+npm run check-proof-packet -- --cwd ../my-app
+npm run scaffold:playwright-visual -- --cwd ../my-app --url http://127.0.0.1:5173 --name dashboard
+```
+
 ## How It Works
 
 ![How it works](assets/how-it-works.png)

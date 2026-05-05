@@ -31,6 +31,10 @@
 - `codex/codex-visual-builder-guild/SKILL.md`
 - `codex/codex-visual-builder-guild/agents/openai.yaml`
 - `tools/install-codex-skill.cjs`
+- `tools/recommend-workflow.cjs`
+- `tools/create-proof-packet.cjs`
+- `tools/check-proof-packet.cjs`
+- `tools/scaffold-playwright-visual.cjs`
 - `tools/usage-audit.cjs`
 
 ## Bundle
