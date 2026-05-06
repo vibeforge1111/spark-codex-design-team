@@ -1,6 +1,6 @@
 {
   "name": "codex-visual-builder-guild",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": false,
   "description": "A free H70-C+ Spark Skill Graphs guild for Codex visual builder loops with imagegen and vision.",
   "type": "commonjs",
