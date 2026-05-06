@@ -25,6 +25,7 @@ Start with `visual-loop-qa`, then route only when the screenshot proves a specif
 
 | Screenshot evidence | Lens to use | Why |
 | --- | --- | --- |
+| Product job, page job, success moment, or ideal user route is unclear | `product-intent-observer` | The guild needs product/page truth before visual critique. |
 | Mobile, tablet, or fluid-width crop, wrapping, hidden controls, cramped taps, unreadable columns, or horizontal overflow | `responsive-vision-auditor` | The issue depends on viewport behavior. |
 | Screen looks polished but the next action, first-time path, recovery, or amount of information feels confusing or overwhelming | `user-flow-friction-auditor` | The issue is product comprehension, not visual decoration. |
 | Dashboard is pretty but not operationally clear | `saas-dashboard-operator` | The issue is information architecture and repeated use. |
@@ -51,6 +52,7 @@ npm run recommend-workflow -- --need "dashboard mobile regression"
 
 | Need | Default output | Extra proof when it matters |
 | --- | --- | --- |
+| product/page intent clarity | product intent brief, page intent brief, ideal user route | `product-intent-observer` before visual or flow lenses |
 | first public demo polish | before/after desktop, tablet, mobile, and fluid-width screenshots | proof packet checked with `npm run check-proof-packet` |
 | first-time user flow | five-second flow read, one click-through state, clear next action and recovery | `user-flow-friction-auditor` plus interaction-state check |
 | SaaS/admin/dashboard work | command surface, scannable metrics, clear next action | `saas-dashboard-operator` plus real-content stress |

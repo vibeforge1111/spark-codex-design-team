@@ -2,6 +2,7 @@ id: codex-visual-builder-loop
 name: Codex visual builder loop
 task_pattern: build or polish a visual product surface with Codex Desktop using imagegen, vision screenshots, responsive QA, interaction testing, and reusable design rules
 required_skills:
+  - product-intent-observer
   - visual-loop-qa
   - user-flow-friction-auditor
   - imagegen-asset-director
@@ -22,6 +23,7 @@ optional_skills:
   - motion-and-feedback-director
   - asset-provenance-librarian
 load_order:
+  - product-intent-observer         # define product intent, page intent, and ideal route before critique
   - visual-loop-qa                  # route the visual problem and define the screenshot matrix
   - user-flow-friction-auditor       # prove the user can understand and complete the flow
   - imagegen-asset-director          # create only the assets the rendered product needs

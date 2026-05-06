@@ -61,7 +61,7 @@ Then say:
 Use codex-visual-builder-guild to run the visual builder loop on this app.
 ```
 
-That gives Codex one easy skill to invoke. The wrapper skill knows the full 18-specialist guild and can route work through the right specialist lens.
+That gives Codex one easy skill to invoke. The wrapper skill knows the full 19-specialist guild and can route work through the right specialist lens.
 
 The default is intentionally small: one visible win first, at most 1-2 specialist lenses, and screenshot proof before claims.
 
@@ -188,6 +188,7 @@ Use the full guild prompt when you want the whole team. Use a specialist lens wh
 
 | If you want... | Summon... | Prompt starter |
 | --- | --- | --- |
+| product/page intent before visual critique | `product-intent-observer` | "Use codex-visual-builder-guild with the product-intent-observer lens. First define product intent, page intent, ideal route, success moment, and what design should make easier." |
 | a full visual QA loop | `visual-loop-qa` | "Use codex-visual-builder-guild with the visual-loop-qa lens. Run the app, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect with Codex App vision, delegate issues, fix, and compare before/after." |
 | easier product flows | `user-flow-friction-auditor` | "Use codex-visual-builder-guild with the user-flow-friction-auditor lens. Check whether a first-time user can tell where they are, what to do next, what happens after the action, and how to recover." |
 | custom UI art or product visuals | `imagegen-asset-director` | "Use codex-visual-builder-guild with the imagegen-asset-director lens. Generate UI-ready assets that match this product, then integrate and screenshot them in context." |
@@ -263,7 +264,7 @@ This keeps the guild from becoming ceremony. A responsive finding can hand off t
 
 ![Specialist wing](assets/specialist-wing.png)
 
-The delegation map shows the core routing. The specialist wing rounds out the full 18-skill roster with the skills that tend to activate after a visual issue becomes more specific.
+The delegation map shows the core routing. The specialist wing rounds out the full 19-skill roster with the skills that tend to activate after a visual issue becomes more specific.
 
 The point is simple: one big vague prompt like "make it look better" becomes a team of smaller, sharper jobs.
 
@@ -325,7 +326,7 @@ npm test
 Expected result:
 
 ```text
-Valid H70-C+: 18
+Valid H70-C+: 19
 Invalid: 0
 With warnings: 0
 Smoke test passed
@@ -334,7 +335,7 @@ Usage audit passed
 
 ## What Is Inside
 
-- `design/*.yaml`: 18 H70-C+ design skills
+- `design/*.yaml`: 19 H70-C+ design skills
 - `QUICKSTART.md`: the 30-second, 2-minute, 5-minute path for new users
 - `codex/codex-visual-builder-guild/SKILL.md`: native Codex wrapper skill
 - `bundles/codex-visual-builder-loop.yaml`: recommended guild load order

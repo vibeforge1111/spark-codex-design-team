@@ -15,7 +15,7 @@ Use this loop for visual work:
 build -> run -> screenshot -> vision review -> delegate -> fix -> compare -> keep the rules
 ```
 
-1. Clarify the product goal when needed.
+1. Establish product intent and page intent when the work is a new section, important surface, onboarding/setup flow, or major redesign.
 2. Run the app locally when possible.
 3. Capture screenshots for desktop, tablet, mobile, and at least one fluid in-between width when layout risk matters.
 4. Inspect real rendered output with vision.
@@ -62,6 +62,7 @@ Default to `visual-loop-qa` plus at most 1-2 specialist lenses. Route by rendere
 
 | Evidence from screenshot or interaction | Lens |
 | --- | --- |
+| product job, page job, success moment, or ideal user route is unclear | `product-intent-observer` |
 | mobile/tablet/fluid-width crop, hidden controls, cramped taps, broken wrapping, unreadable columns, accidental horizontal overflow | `responsive-vision-auditor` |
 | screen looks polished but the user's path, next action, or recovery is unclear; surface feels overwhelming | `user-flow-friction-auditor` |
 | dashboard is pretty but not useful for repeated operation | `saas-dashboard-operator` |
@@ -105,6 +106,8 @@ When more than one lens is useful, pass a compact handoff packet instead of rest
 ```text
 from lens -> to lens
 vision source: screenshot path plus viewport/state inspected
+product intent: target user, core job, success moment, primary loop, anxiety, and design role when relevant
+page intent: page job, ideal route, first viewport answer, deferred complexity, and recovery path when relevant
 vision observation: what Codex actually saw in the image
 supporting evidence: optional DOM metric, test result, or source-code fact
 finding: the concrete visible problem or rule discovered from vision
@@ -146,6 +149,8 @@ Hard rule: if a user can point to a screenshot and say "these boxes look weird" 
 Every guild run must end with a compact report that proves the visual decision loop happened:
 
 - `goal`: the user-facing visual/product problem being solved.
+- `product intent`: the target user, core job, success moment, primary loop, user anxiety, and design role, or `not needed for this narrow pass`.
+- `page intent`: the current page job, ideal user route, first viewport answer, deferred complexity, and recovery path, or `not needed for this narrow pass`.
 - `viewport matrix`: desktop/tablet/mobile/fluid-width coverage, or `not checked`.
 - `state matrix`: default/hover/focus/loading/empty/error coverage, or `not checked`.
 - `screenshots inspected`: before and after screenshot paths, with viewport names.
@@ -179,6 +184,7 @@ Every specialist lens should return concrete evidence, not ceremony:
 Use these specialist lenses:
 
 - `visual-loop-qa`: orchestrate the full visual loop.
+- `product-intent-observer`: define the product intent, page intent, success moment, ideal route, user anxiety, and design role before visual critique.
 - `user-flow-friction-auditor`: audit whether the target user can understand, start, complete, and recover from the intended product flow without overwhelm.
 - `imagegen-asset-director`: create UI-ready generated assets and judge them in context.
 - `responsive-vision-auditor`: verify mobile, tablet, desktop, wide, and awkward fluid-breakpoint layouts.
@@ -201,6 +207,7 @@ Use these specialist lenses:
 ## Operating Rules
 
 - Prefer rendered evidence over taste arguments.
+- For new sections, crucial updates, onboarding/setup, dashboards, or ambiguous product work, run `product-intent-observer` before visual critique.
 - Start with the minimum useful pass unless the user explicitly asks for the full guild.
 - Use at most 1-2 specialist lenses unless screenshots prove more are needed.
 - End with the Run Report Contract so the user can judge the work.
@@ -217,7 +224,6 @@ Use these specialist lenses:
 - Keep edits compatible with the existing codebase and design system.
 - Do not stop at the first draft when screenshots show obvious visual problems.
 - Preserve screenshots, prompts, or notes when they are useful for future design consistency.
-
 ## Common Invocations
 
 For full guild work:

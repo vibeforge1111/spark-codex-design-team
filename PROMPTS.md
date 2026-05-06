@@ -146,7 +146,17 @@ Use codex-visual-builder-guild with the visual-loop-qa lens.
 Run the app, capture screenshots on desktop, tablet, mobile, and one awkward in-between width, inspect the rendered UI with Codex App vision, identify the highest-impact visual issues, delegate each issue to the right specialist lens, apply fixes, and compare before/after screenshots before finishing.
 ```
 
-## User Flow Friction
+## Product And Page Intent
+
+```text
+Use codex-visual-builder-guild with the product-intent-observer lens.
+
+Before changing the UI, define the product intent and page intent. Include: target user, core job, success moment, primary loop, page job, place in the loop, ideal user route, first viewport answer, scary/hard/bloated risks, deferred complexity, design role, and non-goals.
+
+Then route the work to the right guild lens with that intent attached, so visual and flow changes are judged against what the product and page are actually trying to do.
+```
+
+## User Flow Friction Audit
 
 ```text
 Use codex-visual-builder-guild with the user-flow-friction-auditor lens.

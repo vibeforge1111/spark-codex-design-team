@@ -10,6 +10,14 @@ const LANES = [
     evidence: ["desktop/tablet/mobile/fluid before-after screenshots", "Codex App vision observations", "Run Report Contract"]
   },
   {
+    id: "intent",
+    title: "Product and page intent clarity",
+    triggers: ["intent", "product", "page", "job", "jtbd", "user", "route", "surface", "section", "success", "bloated", "scary", "hard"],
+    lenses: ["product-intent-observer", "visual-loop-qa", "user-flow-friction-auditor"],
+    commands: ["npm run create-proof-packet -- --cwd ../my-app"],
+    evidence: ["product intent brief", "page intent brief", "ideal user route", "design role before visual changes"]
+  },
+  {
     id: "dashboard",
     title: "SaaS/admin/dashboard operation",
     triggers: ["dashboard", "admin", "saas", "metrics", "table", "operator", "analytics", "console"],
@@ -19,7 +27,7 @@ const LANES = [
   },
   {
     id: "user-flow",
-    title: "User flow and first-time clarity",
+    title: "User flow and onboarding clarity",
     triggers: ["flow", "user", "onboarding", "confusing", "overwhelming", "friction", "journey", "first-time", "clarity", "easy"],
     lenses: ["visual-loop-qa", "user-flow-friction-auditor", "interaction-state-inspector"],
     commands: ["npm run create-proof-packet -- --cwd ../my-app"],

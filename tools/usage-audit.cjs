@@ -205,9 +205,19 @@ function assertWorkflowRecommenderWorks() {
     encoding: "utf8",
     stdio: "pipe"
   });
+  assert(flowOutput.includes("User flow and onboarding clarity"), "workflow recommender should route onboarding flow needs");
+  assert(flowOutput.includes("user-flow-friction-auditor"), "workflow recommender should include the user-flow lens");
+  const intentOutput = execFileSync(process.execPath, [WORKFLOW_RECOMMENDER, "--need", "product page intent ideal route"], {
+    cwd: ROOT,
+    encoding: "utf8",
+    stdio: "pipe"
+  });
   assert(output.includes("Recommended Visual Builder Guild workflow"), "workflow recommender should print a heading");
   assert(output.includes("SaaS/admin/dashboard operation"), "workflow recommender should route dashboard needs");
-  assert(flowOutput.includes("User flow and first-time clarity"), "workflow recommender should route user-flow needs");
+  assert(flowOutput.includes("User flow and onboarding clarity"), "workflow recommender should route user-flow needs");
+  assert(flowOutput.includes("user-flow-friction-auditor"), "workflow recommender should include the user-flow lens");
+  assert(intentOutput.includes("Product and page intent clarity"), "workflow recommender should route product/page intent needs");
+  assert(intentOutput.includes("product-intent-observer"), "workflow recommender should include the product intent lens");
   assert(systemOutput.includes("Art bible and component-system stewardship"), "workflow recommender should route component-system needs");
   assert(output.includes("Mobile and responsive confidence"), "workflow recommender should route mobile needs");
   assert(output.includes("Regression-sensitive visual baseline"), "workflow recommender should route regression needs");
@@ -236,7 +246,7 @@ const proofPacketTool = read(PROOF_PACKET_TOOL);
 const workflowRecommender = read(WORKFLOW_RECOMMENDER);
 const packageJson = JSON.parse(read(PACKAGE_JSON));
 
-assert(skills.length === 18, `expected 18 design skills, found ${skills.length}`);
+assert(skills.length === 19, `expected 19 design skills, found ${skills.length}`);
 assert(
   JSON.stringify(imagegenTaggedIds) === JSON.stringify(["asset-provenance-librarian", "imagegen-asset-director"]),
   `only asset-specific skills should carry the broad imagegen tag, got ${imagegenTaggedIds.join(", ")}`
@@ -409,6 +419,8 @@ for (const phrase of [
   "Codex App Native Capability Router",
   "Lens Handoff Protocol",
   "Run Report Contract",
+  "product intent",
+  "page intent",
   "viewport matrix",
   "state matrix",
   "screenshots inspected",
@@ -486,6 +498,7 @@ assert(manifest.includes("benchmarks/RUN_TEMPLATE.md"), "MANIFEST should list be
 assert(manifest.includes("examples/first-run-demo/PROOF_PACKET.md"), "MANIFEST should list demo proof packet");
 
 const routingQueries = [
+  ["product intent page intent job to be done success moment ideal user route", "product-intent-observer"],
   ["full visual QA loop screenshot vision delegate before after", "visual-loop-qa"],
   ["first time user flow onboarding confusing overwhelming next action recovery", "user-flow-friction-auditor"],
   ["generate UI-ready imagegen assets product visuals", "imagegen-asset-director"],
@@ -524,12 +537,12 @@ if (failures > 0) {
 }
 
 console.log("Usage audit passed");
-console.log(`- specialist invocation coverage: ${skillIds.length}/18`);
+console.log(`- specialist invocation coverage: ${skillIds.length}/19`);
 console.log("- README install path verified");
 console.log("- PROMPTS specialist spellbook verified");
 console.log("- Codex wrapper trigger and metadata verified");
 console.log("- installer overwrite/idempotence verified in temp CODEX_HOME");
 console.log("- workflow recommender verified");
 console.log("- proof packet check, score, and Playwright visual scaffold tools verified");
-console.log("- keyword routing checks passed for all 18 specialists");
+console.log("- keyword routing checks passed for all 19 specialists");
 console.log("- beginner first-run, quickstart, proof packet, and demo app coverage verified");

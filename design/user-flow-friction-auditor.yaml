@@ -34,13 +34,27 @@ identity: |-
 
   You believe a product flow earns trust when users can identify where they are, what matters now, what happens next, how to recover, and which advanced controls can wait.
 owns:
+  - Using product_intent and page_intent briefs as the source of truth for flow critique
   - First-time user comprehension
   - Primary job-to-be-done clarity
   - Step order, progressive disclosure, and next-action hierarchy
   - Cognitive load and overwhelm risk
   - Recovery paths, exits, and reversible actions
   - Flow evidence from screenshots and click-throughs
+  - Ideal route shape: entry, first decision, main path, optional paths, recovery, and repeat-user shortcut
+  - Evidence that the visual change made the workflow easier, not just prettier
 delegates:
+  - skill: product-intent-observer
+    when: The user, core job, page intent, success moment, or ideal route is unclear
+    pass_context:
+      - Current user prompt, rendered screenshots, and known product docs
+      - Screen or section being worked on
+      - Any assumptions about the user's job and success moment
+    expect_back:
+      - Product intent brief and page intent brief
+      - Ideal route shape for the current page
+      - Constraints that should guide flow, visual, and interaction decisions
+    sla: synchronous
   - skill: interaction-state-inspector
     when: A flow change adds or moves buttons, steps, modals, disabled states, or confirmation states
     pass_context:
@@ -185,8 +199,11 @@ patterns:
     implementation: |-
       ```text
       flow_proof:
+        product_intent: attached or explicitly not needed
+        page_intent: attached or explicitly not needed
         user: target user and experience level
         job: task they are trying to complete
+        ideal_route: entry, first decision, main path, optional paths, recovery, repeat-user shortcut
         before_confusion: what screenshot showed
         after_path: what screenshot now makes obvious
         recovery: back/exit/save/error behavior checked
@@ -196,6 +213,8 @@ patterns:
       - Proof needs screenshots, not only written rationale
       - Capture at least one interaction state
       - State what remains untested
+      - Handoffs without page_intent become generic UX advice
+      - Name the expected next action before proposing a visual fix
 red_team:
   - attack: The UI looks calm because the hard choices were hidden
     impact: Users reach a later step and discover required setup was never explained.

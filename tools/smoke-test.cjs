@@ -107,10 +107,11 @@ const skills = loadSkills();
 const skillIds = new Set(skills.map(skill => skill.id));
 const bundle = readYaml(BUNDLE_FILE);
 
-assert(skills.length === 18, `expected 18 design skills, found ${skills.length}`);
+assert(skills.length === 19, `expected 19 design skills, found ${skills.length}`);
 assert(bundle.id === 'codex-visual-builder-loop', 'bundle id should be codex-visual-builder-loop');
-assert(bundle.load_order?.[0] === 'visual-loop-qa', 'visual-loop-qa must be first in bundle load_order');
-assert((bundle.required_skills || []).length === 12, 'bundle should have 12 required skills');
+assert(bundle.load_order?.[0] === 'product-intent-observer', 'product-intent-observer must be first in bundle load_order');
+assert(bundle.load_order?.[1] === 'visual-loop-qa', 'visual-loop-qa must follow product intent in bundle load_order');
+assert((bundle.required_skills || []).length === 13, 'bundle should have 13 required skills');
 assert((bundle.optional_skills || []).length === 6, 'bundle should have 6 optional skills');
 
 for (const id of [...(bundle.required_skills || []), ...(bundle.optional_skills || []), ...(bundle.load_order || [])]) {

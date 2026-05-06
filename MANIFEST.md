@@ -50,6 +50,7 @@
 ## Required Team
 
 - `design/visual-loop-qa.yaml`
+- `design/product-intent-observer.yaml`
 - `design/user-flow-friction-auditor.yaml`
 - `design/imagegen-asset-director.yaml`
 - `design/responsive-vision-auditor.yaml`
