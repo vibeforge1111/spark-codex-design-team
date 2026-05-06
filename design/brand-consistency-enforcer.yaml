@@ -204,7 +204,7 @@ testing:
     focus: Rendered screen family inspection before and after edits
     example: |-
       ```text
-      Capture desktop and mobile screenshots.
+      Capture desktop, tablet, mobile, and awkward in-between screenshots.
       List top 5 visual issues by impact.
       Apply fixes.
       Recapture and confirm each issue is gone.

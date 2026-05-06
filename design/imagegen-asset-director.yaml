@@ -158,7 +158,7 @@ patterns:
         avoid: dark blur, random people, decorative gradients, tiny product
       verification:
         - integrate candidate asset
-        - screenshot desktop and mobile
+        - screenshot desktop, tablet, mobile, and awkward in-between
         - reject if text contrast or product recognition drops
       ```
     gotchas:
@@ -207,7 +207,7 @@ testing:
     focus: Rendered image asset inspection before and after edits
     example: |-
       ```text
-      Capture desktop and mobile screenshots.
+      Capture desktop, tablet, mobile, and awkward in-between screenshots.
       List top 5 visual issues by impact.
       Apply fixes.
       Recapture and confirm each issue is gone.
@@ -276,7 +276,7 @@ examples:
         avoid: dark blur, random people, decorative gradients, tiny product
       verification:
         - integrate candidate asset
-        - screenshot desktop and mobile
+        - screenshot desktop, tablet, mobile, and awkward in-between
         - reject if text contrast or product recognition drops
       ```
   - name: Imagegen Asset Director Done Criteria

@@ -72,7 +72,7 @@ Use this when you want proof that the guild works, not a long design ceremony:
 ```text
 Use codex-visual-builder-guild on this app.
 
-Run it locally, take desktop and mobile screenshots, inspect the rendered UI with vision, name the top 3 visual issues, fix the highest-impact one, then capture after screenshots.
+Run it locally, take desktop, tablet, mobile, and awkward in-between screenshots, inspect the rendered UI with Codex App vision, name the top 3 visual issues, fix the highest-impact one, then capture after screenshots.
 
 End with a plain-English before/after summary and the screenshot paths.
 ```
@@ -80,7 +80,7 @@ End with a plain-English before/after summary and the screenshot paths.
 Expected result:
 
 - Codex runs the app instead of guessing from source code.
-- You get desktop and mobile screenshots.
+- You get desktop, tablet, mobile, and fluid breakpoint screenshots.
 - Codex records concrete vision observations from those screenshots.
 - The guild names the biggest visible problem.
 - The guild uses at most 1-2 specialist lenses unless screenshots prove more are needed.
@@ -106,11 +106,22 @@ build -> run -> screenshot -> vision review -> delegate -> fix -> compare -> kee
 That means Codex can:
 
 - generate UI-ready image assets instead of waiting on placeholders
-- inspect real screenshots instead of guessing from code
+- inspect real screenshots with Codex App vision instead of guessing from code
 - catch mobile, spacing, contrast, and interaction problems
 - hand narrow problems to specialist skills
 - turn great screens into design rules, tokens, and regression baselines
 - work standalone or inside Spark Skill Graphs
+
+## Codex App Native Guardrails
+
+The Codex wrapper is optimized for what Codex App gives you natively:
+
+- **Vision is the judge.** Every visual claim should come from a real screenshot or rendered state that Codex App inspected with vision.
+- **The in-app browser is live context.** When a URL is open, use that rendered page as the product surface before guessing from files.
+- **Imagegen is for integrated assets.** Generate custom visuals only when they make the product clearer, then put them in the UI and screenshot them in context.
+- **Screenshots are shareable proof.** Final reports should include local screenshot paths and plain-English observations about what changed.
+- **Metrics support vision.** DOM measurements, tests, and screenshot filenames can support a finding, but they should not replace visual inspection.
+- **Native beats generic.** Prefer Codex App vision, local images, clickable files, and screenshot evidence over external wrappers that hide what Codex can already do.
 
 ## Start With This Prompt
 
@@ -121,7 +132,7 @@ Use codex-visual-builder-guild as a visual product team.
 
 Goal: [describe what we are building].
 
-Run the app locally, take screenshots on desktop and mobile, inspect the rendered UI with vision, and delegate issues to the right specialists. Use imagegen when custom assets would improve the product. Focus on hierarchy, spacing, contrast, text fit, responsive layout, interaction states, accessibility, and visual consistency.
+Run the app locally, take screenshots on desktop, tablet, mobile, and an awkward in-between width, inspect the rendered UI with Codex App vision, and delegate issues to the right specialists. Use imagegen when custom assets would improve the product, then integrate and screenshot those assets in context. Focus on hierarchy, spacing, contrast, text fit, responsive layout, interaction states, accessibility, and visual consistency.
 
 Do not stop at the first draft. Iterate until the UI feels polished, compare before/after screenshots, and summarize the final design rules.
 ```
@@ -176,9 +187,9 @@ Use the full guild prompt when you want the whole team. Use a specialist lens wh
 
 | If you want... | Summon... | Prompt starter |
 | --- | --- | --- |
-| a full visual QA loop | `visual-loop-qa` | "Use codex-visual-builder-guild with the visual-loop-qa lens. Run the app, screenshot desktop and mobile, inspect with vision, delegate issues, fix, and compare before/after." |
+| a full visual QA loop | `visual-loop-qa` | "Use codex-visual-builder-guild with the visual-loop-qa lens. Run the app, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect with Codex App vision, delegate issues, fix, and compare before/after." |
 | custom UI art or product visuals | `imagegen-asset-director` | "Use codex-visual-builder-guild with the imagegen-asset-director lens. Generate UI-ready assets that match this product, then integrate and screenshot them in context." |
-| mobile/tablet/desktop confidence | `responsive-vision-auditor` | "Use codex-visual-builder-guild with the responsive-vision-auditor lens. Check the layout across mobile, tablet, desktop, and wide screens." |
+| mobile/tablet/desktop confidence | `responsive-vision-auditor` | "Use codex-visual-builder-guild with the responsive-vision-auditor lens. Check the layout across mobile, tablet, desktop, wide, and awkward fluid-breakpoint screens." |
 | hover, focus, modal, loading, and error polish | `interaction-state-inspector` | "Use codex-visual-builder-guild with the interaction-state-inspector lens. Click through the main flows and inspect every important interaction state." |
 | consistent product taste | `brand-consistency-enforcer` | "Use codex-visual-builder-guild with the brand-consistency-enforcer lens. Compare screens and enforce one coherent visual language." |
 | a reusable style guide | `art-bible-extractor` | "Use codex-visual-builder-guild with the art-bible-extractor lens. Turn the best screenshots into an art bible." |
@@ -224,6 +235,20 @@ Every handoff uses H70-C+ `delegates_version: 2` contracts:
 - `pass_context`: what the specialist receives
 - `expect_back`: what the specialist must return
 - `sla`: whether the handoff is synchronous or async
+
+For native Codex runs, the wrapper now uses the same idea as a visible **vision-backed handoff packet**. The packet must come from Codex App vision inspecting a real screenshot or rendered state. Filenames, DOM metrics, tests, and source reads can support the packet, but they cannot replace the vision observation.
+
+```text
+from lens -> to lens
+vision source: screenshot path plus viewport/state inspected
+vision observation: what Codex actually saw in the image
+supporting evidence: optional DOM metric, test result, or source-code fact
+finding: the visible problem or rule discovered from vision
+decision: fix now, verify after fix, or keep as residual risk
+next vision check: the screenshot, interaction, or content case the next lens must inspect with vision
+```
+
+This keeps the guild from becoming ceremony. A responsive finding can hand off to interaction-state checks, ugly real content can hand off to responsive review, onboarding/workflow changes can hand off to interaction review, and accepted visual changes can hand off to screenshot-regression guardrails. If the next lens would not change a decision, screenshot, vision observation, test, or rule, stop.
 
 ## Specialist Wing
 

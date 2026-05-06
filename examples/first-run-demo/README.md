@@ -21,7 +21,7 @@ Then paste this into Codex Desktop:
 ```text
 Use codex-visual-builder-guild on this demo app.
 
-Run it locally, take desktop and mobile screenshots, inspect the rendered UI with vision, name the top 3 visual issues, fix the highest-impact one, then capture after screenshots.
+Run it locally, take desktop, tablet, mobile, and awkward in-between screenshots, inspect the rendered UI with Codex App vision, name the top 3 visual issues, fix the highest-impact one, then capture after screenshots.
 
 End with a plain-English before/after summary and the screenshot paths.
 ```
@@ -32,7 +32,7 @@ End with a plain-English before/after summary and the screenshot paths.
 - The action area has weak hierarchy.
 - The "Before" proof card is low contrast.
 - Long creator/project text stresses the layout.
-- Mobile should be checked with desktop and mobile screenshots, not guessed from CSS.
+- Mobile should be checked with desktop, tablet, mobile, and awkward in-between screenshots, not guessed from CSS.
 
 The goal is not to make this demo fancy. The goal is to show the screenshot loop catching real, intentional visual problems quickly.
 

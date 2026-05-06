@@ -4,7 +4,7 @@ This is the shortest path from "I saw the guild on X" to "Codex improved a real 
 
 ## 30 Seconds: What It Does
 
-Codex Visual Builder Guild makes Codex stop guessing from source code. It runs your app, captures desktop and mobile screenshots, uses vision to inspect what actually rendered, fixes the biggest visual issue, and compares before/after screenshots.
+Codex Visual Builder Guild makes Codex stop guessing from source code. It runs your app, captures desktop, tablet, mobile, and awkward in-between screenshots, uses Codex App vision to inspect what actually rendered, fixes the biggest visual issue, and compares before/after screenshots.
 
 Use it when an AI-made UI is "almost there" but still has weak hierarchy, mobile breakage, contrast problems, awkward spacing, missing states, or unclear visual proof.
 
@@ -32,13 +32,13 @@ If Codex does not recognize `codex-visual-builder-guild`, restart Codex Desktop 
 Open the project you want Codex to improve, then paste:
 
 ```text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, then show before/after screenshot paths and what changed.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect screenshots with Codex App vision, fix the single highest-impact visual issue, then show before/after screenshot paths and what changed.
 ```
 
 Good output includes:
 
-- first desktop and mobile screenshots
-- concrete Codex vision observations from those screenshots
+- first desktop, tablet, mobile, and awkward in-between screenshots
+- concrete Codex App vision observations from those screenshots
 - the top visible issue
 - at most 1-2 specialist lenses, only when screenshot evidence justifies them
 - the fix that was made
@@ -69,7 +69,7 @@ Reusable rule:
 Automation notes:
 ```
 
-If the final answer does not include screenshot paths and a verification claim, the guild did not finish the loop.
+If the final answer does not include screenshot paths, vision observations, and a verification claim, the guild did not finish the loop.
 
 To create a fill-in proof packet before the run:
 

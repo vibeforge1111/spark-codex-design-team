@@ -17,14 +17,14 @@ The demo starts with intentional problems:
 Prompt:
 
 ```text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop and mobile, fix the single highest-impact visual issue, then show before/after screenshot paths and what changed.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect screenshots with Codex App vision, fix the single highest-impact visual issue, then show before/after screenshot paths and what changed.
 ```
 
 Expected flow:
 
 1. Run the demo locally.
-2. Capture desktop and mobile screenshots.
-3. Use vision to inspect the rendered UI.
+2. Capture desktop, tablet, mobile, and awkward in-between screenshots.
+3. Use Codex App vision to inspect the rendered UI.
 4. Pick one highest-impact issue.
 5. Fix it.
 6. Capture after screenshots.
@@ -55,7 +55,7 @@ Automation notes:
 
 Problem: the `Before` card text is low contrast, so the most important proof area is hard to read.
 
-Evidence: desktop and mobile screenshots show muted body text on a dark brown panel.
+Evidence: desktop, tablet, mobile, and awkward in-between screenshots show muted body text on a dark brown panel.
 
 Fix: increase contrast on the proof card text and make the before/after purpose clearer.
 
@@ -66,15 +66,19 @@ Verification: after screenshots show the proof card can be read without zooming,
 A good first run says something like:
 
 ```text
-Improved: the proof card is now readable on desktop and mobile, and the primary action has clearer hierarchy.
+Improved: the proof card is now readable on desktop, tablet, mobile, and awkward in-between, and the primary action has clearer hierarchy.
 Still weak: the hero copy is broad and the demo still needs real product screenshots.
 Screenshots:
 - screenshots/before-desktop.png
+- screenshots/before-tablet.png
 - screenshots/before-mobile.png
+- screenshots/before-fluid.png
 - screenshots/after-desktop.png
+- screenshots/after-tablet.png
 - screenshots/after-mobile.png
+- screenshots/after-fluid.png
 Reusable rule: proof areas need readable contrast before visual polish counts.
 Automation notes: manual screenshot pass only; no Playwright baseline added for the disposable demo.
 ```
 
-If the output only says "looks better" without screenshot paths, the loop did not do its job.
+If the output only says "looks better" without screenshot paths and vision observations, the loop did not do its job.

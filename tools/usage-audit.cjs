@@ -102,7 +102,9 @@ function assertInstallWorks() {
     assert(output.includes("CODEX_HOME:"), "installer output should print CODEX_HOME");
     assert(output.includes("Verified:"), "installer output should include verification summary");
     assert(output.includes("First 5-minute win prompt:"), "installer output should include first-run prompt");
-    assert(output.includes("Codex vision"), "installer prompt should require actual Codex vision");
+    assert(output.includes("desktop, tablet, mobile, and one awkward in-between width"), "installer prompt should include responsive viewport matrix");
+    assert(output.includes("Codex App vision"), "installer prompt should require Codex App vision");
+    assert(output.includes("local paths"), "installer prompt should require local screenshot paths");
     assert(output.includes("single highest-impact visual issue"), "installer prompt should bias toward one fast visible win");
     assert(output.includes("at most 1-2 specialist lenses"), "installer prompt should suppress specialist ceremony");
     assert(output.includes("Run Report Contract"), "installer prompt should require the run report contract");
@@ -268,7 +270,9 @@ for (const phrase of [
   "5 Minutes: Paste This",
   "What Codex Must Report",
   "Lens Router",
+  "Viewport matrix:",
   "Screenshots inspected:",
+  "Vision observations:",
   "If you are unsure, choose Codex Desktop",
   "lens used: none"
 ]) {
@@ -318,7 +322,7 @@ for (const phrase of [
 const demoText = `${read(DEMO_README)}\n${read(DEMO_PROOF)}\n${read(DEMO_INDEX)}\n${read(DEMO_STYLES)}`;
 for (const phrase of [
   "Use codex-visual-builder-guild",
-  "desktop and mobile screenshots",
+  "desktop, tablet, mobile, and awkward in-between screenshots",
   "intentional visual problems",
   "Minimum Useful Guild Pass",
   "Run Report Contract",
@@ -329,6 +333,8 @@ for (const phrase of [
 
 for (const phrase of [
   "Minimum Useful Pass",
+  "Codex App Native Capability Router",
+  "Lens Handoff Protocol",
   "Run Report Contract",
   "viewport matrix",
   "state matrix",
@@ -336,6 +342,7 @@ for (const phrase of [
   "vision observations",
   "chosen issue",
   "lens used",
+  "handoff log",
   "exact fix",
   "accepted visual change",
   "still weak",
@@ -348,7 +355,14 @@ for (const phrase of [
   "evidence",
   "fix",
   "verification",
-  "residual risk"
+  "residual risk",
+  "handoff next",
+  "from lens -> to lens",
+  "vision source",
+  "vision observation",
+  "supporting evidence",
+  "next vision check",
+  "vision handoff blocked"
 ]) {
   assert(codexSkill.includes(phrase), `Codex wrapper should include artifact contract phrase: ${phrase}`);
 }
@@ -366,12 +380,26 @@ for (const phrase of [
 }
 
 assert(openaiYaml.includes("default_prompt:"), "agents/openai.yaml should include default_prompt");
-assert(openaiYaml.includes("screenshot desktop and mobile"), "default prompt should preserve screenshot workflow");
-assert(openaiYaml.includes("Codex vision"), "default prompt should require actual Codex vision");
+assert(openaiYaml.includes("screenshot desktop, tablet, mobile, and one awkward in-between width"), "default prompt should preserve responsive screenshot workflow");
+assert(openaiYaml.includes("Codex App vision"), "default prompt should explicitly require Codex App vision");
+assert(openaiYaml.includes("in-app browser as live context"), "default prompt should use the in-app browser as native live context");
+assert(openaiYaml.includes("local paths"), "default prompt should require local screenshot paths");
+assert(openaiYaml.includes("imagegen only for integrated assets"), "default prompt should prevent detached decorative imagegen work");
 assert(openaiYaml.includes("single highest-impact visual issue"), "default prompt should bias toward a minimum useful pass");
+assert(openaiYaml.includes("vision-backed lens handoff packets"), "default prompt should require vision-backed lens handoff packets when specialists chain");
 assert(openaiYaml.includes("Run Report Contract"), "default prompt should require the run report contract");
 assert(openaiYaml.includes("at most 1-2 specialist lenses"), "default prompt should suppress specialist ceremony");
 assert(openaiYaml.includes("automation notes"), "default prompt should ask for automation notes");
+assert(readme.includes("Codex App Native Guardrails"), "README should explain Codex App native guardrails");
+assert(readme.includes("The in-app browser is live context"), "README should make in-app browser context explicit");
+assert(readme.includes("Imagegen is for integrated assets"), "README should constrain imagegen to integrated assets");
+assert(readme.includes("vision-backed handoff packet"), "README should explain native Codex vision-backed handoff packets");
+assert(readme.includes("what Codex actually saw in the image"), "README handoff packet should require vision observations");
+assert(prompts.includes("Codex App Native Guardrails"), "PROMPTS should include copy-paste Codex App native guardrails");
+assert(prompts.includes("Use Codex App native capabilities first"), "PROMPTS should include native-first invocation language");
+assert(prompts.includes("imagegen only for assets that will be integrated into the UI"), "PROMPTS should constrain imagegen to integrated UI assets");
+assert(prompts.includes("from lens -> to lens"), "PROMPTS should include copy-paste handoff packet format");
+assert(prompts.includes("vision observation: what Codex actually saw in the image"), "PROMPTS should require vision-backed handoff observations");
 assert(manifest.includes("tools/usage-audit.cjs"), "MANIFEST should list usage audit");
 assert(manifest.includes("tools/recommend-workflow.cjs"), "MANIFEST should list workflow recommender");
 assert(manifest.includes("tools/create-proof-packet.cjs"), "MANIFEST should list proof packet scaffold tool");
