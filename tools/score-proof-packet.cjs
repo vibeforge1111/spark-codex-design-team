@@ -6,13 +6,13 @@ const path = require("path");
 const RUBRIC = [
   {
     label: "screenshot evidence",
-    points: 18,
+    points: 16,
     test: context => context.screenshotCount >= 4 ? 1 : context.screenshotCount >= 2 ? 0.7 : 0,
     note: context => `${context.screenshotCount} screenshot path(s)`
   },
   {
     label: "actual vision observations",
-    points: 18,
+    points: 16,
     test: context => hasSubstance(context.fields["Vision observations"]) ? 1 : 0,
     note: context => hasSubstance(context.fields["Vision observations"]) ? "vision observations present" : "missing vision observations"
   },
@@ -53,9 +53,15 @@ const RUBRIC = [
   },
   {
     label: "verification quality",
-    points: 10,
+    points: 8,
     test: context => hasSubstance(context.fields["Verification"]) ? 1 : 0,
     note: context => compact(context.fields["Verification"])
+  },
+  {
+    label: "post-fix ruthlessness",
+    points: 6,
+    test: context => hasSubstance(context.fields["Post-fix ruthlessness"]) ? 1 : 0,
+    note: context => compact(context.fields["Post-fix ruthlessness"])
   },
   {
     label: "residual risk honesty",
@@ -82,6 +88,7 @@ const FIELD_LABELS = [
   "Lens used",
   "Exact fix",
   "Verification",
+  "Post-fix ruthlessness",
   "Accepted visual change",
   "Still weak",
   "Reusable rule",

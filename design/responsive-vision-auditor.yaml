@@ -35,6 +35,7 @@ owns:
   - Grid and nav collapse behavior
   - Hero and image crop checks
   - Tap target visibility by viewport
+  - Awkward middle-width checks before accepting desktop or mobile fixes
   - Viewport-specific fix criteria
 delegates:
   - skill: visual-accessibility-sentinel
@@ -132,6 +133,17 @@ anti_patterns:
       GOOD: Define the minimum state and viewport matrix, then finish only after the matrix passes.
       ```
     detection: rg -n "hover|focus|disabled|loading|error|empty|mobile" src app components 2>nul
+  - name: Named Breakpoint Theater
+    example: |-
+      ```text
+      BAD: Verify only desktop and phone screenshots, then assume tablet and laptop widths are fine.
+      ```
+    why_bad: Many real users live between named breakpoints. Rails, cards, toolbars, and text blocks often get weird at 900-1280px even when desktop and mobile pass.
+    instead: |-
+      ```text
+      GOOD: Include tablet plus one awkward fluid width near the layout transition and fix the rule, not one exact pixel.
+      ```
+    detection: rg -n "@media|min-width|max-width|container|grid-template|sidebar|rail|drawer|breakpoint" src app components styles --glob "*.{css,scss,ts,tsx,js,jsx}" 2>nul
   - name: Undocumented Taste Drift
     example: |-
       ```text
@@ -166,6 +178,26 @@ patterns:
       - Never skip the first screenshot
       - Keep the state matrix small but real
       - Do not judge generated assets outside the layout
+      - If middle width fails, repair the responsive rule instead of hiding content at one pixel
+  - name: Middle-Width Truth Pass
+    when: Use whenever desktop and mobile look acceptable but rails, dashboards, cards, or composer layouts may shift between them.
+    implementation: |-
+      ```text
+      middle_width_truth:
+        required_viewports:
+          - tablet: 834x1112 or 1024x768
+          - fluid: 1180x900, 1280x900, or the user's reported width
+        inspect:
+          - side rails keep useful proportions
+          - card gaps remain visible
+          - text does not wrap into skinny unreadable columns
+          - composer/toolbars do not crowd the main task
+          - hidden panels remain reachable
+      ```
+    gotchas:
+      - Do not call mobile/desktop coverage enough for app shells
+      - Tablet can reveal both desktop and mobile assumptions at once
+      - Capture the exact awkward width that exposed the issue
   - name: Specialist Delegation Contract
     when: Use when the viewport layout failure belongs to a narrower skill.
     implementation: |-
@@ -229,6 +261,13 @@ testing:
       Accept intentional deltas only.
       Record the winning state as a baseline or design rule.
       ```
+  - type: Middle-width regression
+    focus: Catch responsive weirdness between named breakpoints
+    example: |-
+      ```text
+      Recapture tablet and one awkward fluid width after every layout fix.
+      Fail if spacing collapses, actions wrap badly, or rails overpower the work surface.
+      ```
 decision_framework:
   - situation: The problem is broad visual uncertainty in a rendered viewport layout
     choose: Use visual-loop-qa as router
@@ -246,6 +285,10 @@ decision_framework:
     choose: Delegate to art-bible-extractor and design-token-surgeon
     because: Taste must become a rule or token before it can scale.
     avoid: Relying on memory or screenshot imitation alone
+  - situation: Desktop and mobile pass but the app has rails, dashboards, cards, or toolbars
+    choose: Add a Middle-Width Truth Pass
+    because: The riskiest layout failures often happen between named breakpoints.
+    avoid: Shipping from two endpoints only
 recovery:
   - failure: Visual regression found in responsive visual QA
     detect: Before/after screenshots show unintended layout, hierarchy, or state change.
@@ -307,3 +350,6 @@ gotchas:
   - trap: Calling it done after desktop
     why: Most visual failures hide on mobile, in states, or with real content.
     correct: Check at least one small viewport and one non-happy state for meaningful UI work.
+  - trap: Treating tablet as optional for app shells
+    why: Tablet and laptop widths expose cramped rails, touching cards, and awkward action wraps.
+    correct: Always include tablet plus one awkward fluid width when layout risk matters.

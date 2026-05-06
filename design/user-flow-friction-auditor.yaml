@@ -43,6 +43,7 @@ owns:
   - Flow evidence from screenshots and click-throughs
   - Ideal route shape: entry, first decision, main path, optional paths, recovery, and repeat-user shortcut
   - Evidence that the visual change made the workflow easier, not just prettier
+  - Post-fix flow checks for leftover onboarding, duplicated actions, misplaced guidance, and newly confusing routes
 delegates:
   - skill: product-intent-observer
     when: The user, core job, page intent, success moment, or ideal route is unclear
@@ -161,6 +162,17 @@ anti_patterns:
       GOOD: Use user-language labels, short task copy, and examples tied to the job they came to do.
       ```
     detection: rg -n "provider|scope|route|shard|runtime|adapter|pipeline|orchestrator|chip" src app components docs --glob "*.{ts,tsx,js,jsx,md,html}" 2>nul
+  - name: Leftover Guidance After The Fix
+    example: |-
+      ```text
+      BAD: Move setup cards out of the way but leave an onboarding sentence floating in the work canvas.
+      ```
+    why_bad: The screen is technically simpler, but the remaining guidance still tells the user the page is not really a work surface.
+    instead: |-
+      ```text
+      GOOD: Put setup guidance in onboarding, a context rail, or composer-adjacent controls so the main canvas supports the current task.
+      ```
+    detection: rg -n "ready when you are|setup guide|onboarding|next best|start here|open setup|getting started" src app components --glob "*.{ts,tsx,js,jsx,html}" 2>nul
 patterns:
   - name: Five-Second Flow Read
     when: Use before deciding whether a polished screen is actually usable.
@@ -215,6 +227,24 @@ patterns:
       - State what remains untested
       - Handoffs without page_intent become generic UX advice
       - Name the expected next action before proposing a visual fix
+  - name: Post-Fix Flow Read
+    when: Use after a visual or flow fix changes the user's route, actions, or setup guidance.
+    implementation: |-
+      ```text
+      post_fix_flow_read:
+        screenshot: after state and viewport inspected with vision
+        expected_route: where the user should look and act now
+        leftover_check:
+          - any duplicated action?
+          - any setup/onboarding copy in the wrong place?
+          - any secondary route visually louder than the main route?
+          - any scary, hard, or bloated step still shown before intent?
+        decision: fix one leftover now, or record why it can wait
+      ```
+    gotchas:
+      - Compare against page_intent, not generic neatness
+      - Do not add explanation when sequence is the problem
+      - Verify at least one middle or mobile viewport
 red_team:
   - attack: The UI looks calm because the hard choices were hidden
     impact: Users reach a later step and discover required setup was never explained.
@@ -253,6 +283,13 @@ testing:
       Move non-required choices behind progressive disclosure.
       Verify the mobile first viewport still shows the main path.
       ```
+  - type: Post-fix flow regression
+    focus: Ensure the first fix did not leave a confusing route or duplicated action
+    example: |-
+      ```text
+      Re-read the after screenshot in five seconds.
+      Fail if a leftover onboarding block, duplicated CTA, or misplaced setup prompt still competes with the current task.
+      ```
 decision_framework:
   - situation: The screen is visually polished but users may not know what to do
     choose: Use user-flow-friction-auditor before more visual polish
@@ -270,6 +307,10 @@ decision_framework:
     choose: Pair with saas-dashboard-operator
     because: Repeated work has different density and shortcut needs than a marketing or onboarding surface.
     avoid: Turning dashboards into explanatory landing pages
+  - situation: The first fix improved layout but the path still feels odd
+    choose: Run Post-Fix Flow Read before visual polish continues
+    because: Flow leftovers are often easier to see after density or spacing has improved.
+    avoid: Polishing the leftover copy or duplicated action in place
 recovery:
   - failure: Flow regression made the product harder to use
     detect: Before/after screenshots or click-through notes show more visible choices, less obvious next action, or missing recovery.
@@ -323,3 +364,6 @@ gotchas:
   - trap: Fixing desktop flow only
     why: Mobile and fluid widths can bury the first task under guidance, steppers, or sticky footers.
     correct: Verify the first viewport and primary path across desktop, tablet, mobile, and fluid widths.
+  - trap: Letting leftover onboarding copy survive because the main issue was fixed
+    why: Users experience the leftover as uncertainty about whether they are in setup mode or work mode.
+    correct: Move guidance into onboarding, a rail, or composer-adjacent controls based on page intent.

@@ -36,6 +36,7 @@ owns:
   - Desktop and mobile screenshot inspection
   - Visual issue triage by user impact
   - Before and after screenshot comparison
+  - Post-fix ruthlessness checks that challenge the first improvement
   - Routing to specialist design skills
   - Stopping criteria for polished visual work
 delegates:
@@ -145,6 +146,17 @@ anti_patterns:
       GOOD: Define the minimum state and viewport matrix, then finish only after the matrix passes.
       ```
     detection: rg -n "hover|focus|disabled|loading|error|empty|mobile" src app components 2>nul
+  - name: Better-Than-Before Acceptance
+    example: |-
+      ```text
+      BAD: Stop after the after screenshot is cleaner even though floating onboarding copy, duplicated actions, box soup, or text-first clutter still look awkward.
+      ```
+    why_bad: The first fix often exposes the next real failure. Accepting merely better screenshots leaves the exact visible weirdness users will point out.
+    instead: |-
+      ```text
+      GOOD: Run a post-fix ruthlessness pass on the after screenshots and make one more focused fix if a higher-impact leftover is visible.
+      ```
+    detection: rg -n "ready when you are|open setup|more options|card|panel|guide|empty state|next best|secondary" src app components --glob "*.{ts,tsx,js,jsx,html,css,scss}" 2>nul
   - name: Undocumented Taste Drift
     example: |-
       ```text
@@ -201,6 +213,26 @@ patterns:
       - Do not turn one-off polish into 40 raw CSS values
       - Rules should be specific enough to implement
       - Reject rules that only describe mood
+  - name: Post-Fix Ruthlessness Gate
+    when: Use after every first visual fix before accepting the run.
+    implementation: |-
+      ```text
+      after_fix_ruthlessness:
+        vision_source: after desktop/tablet/mobile/fluid screenshot paths
+        ask:
+          - Did the fix leave awkward leftover onboarding, duplicated actions, floating copy, box soup, or text-first clutter?
+          - Did the fix make the screen heavier, scarier, or less scannable?
+          - Did any secondary action now compete with the main route?
+          - Did desktop get better while tablet, mobile, or fluid width regressed?
+          - Did the new pattern need an art bible/component-system rule?
+        action:
+          - fix one newly obvious higher-impact issue, then re-screenshot
+          - otherwise record the residual risk and stop
+      ```
+    gotchas:
+      - The pass must inspect rendered screenshots, not code intent
+      - Do not start a broad redesign after the gate
+      - The gate should make the workflow sharper, not ceremonially longer
 red_team:
   - attack: A beautiful generated asset hides product truth
     impact: The rendered screen looks impressive but users cannot read, inspect, or act.
@@ -240,6 +272,13 @@ testing:
       Accept intentional deltas only.
       Record the winning state as a baseline or design rule.
       ```
+  - type: Post-fix ruthlessness
+    focus: Catch leftovers created or exposed by the first fix
+    example: |-
+      ```text
+      Inspect after screenshots for awkward leftovers, duplicated actions, floating setup copy, box soup, text-first clutter, and responsive regressions.
+      Fail if a higher-impact visible issue remains and can be fixed in one focused pass.
+      ```
 decision_framework:
   - situation: The problem is broad visual uncertainty in a rendered rendered screen
     choose: Use visual-loop-qa as router
@@ -257,6 +296,10 @@ decision_framework:
     choose: Delegate to art-bible-extractor and design-token-surgeon
     because: Taste must become a rule or token before it can scale.
     avoid: Relying on memory or screenshot imitation alone
+  - situation: The after screenshot is better but still feels awkward
+    choose: Run the Post-Fix Ruthlessness Gate before accepting the run
+    because: Better-than-before acceptance can hide leftover onboarding, duplicated actions, and density problems.
+    avoid: Ending the run while a user would still point at obvious weirdness
 recovery:
   - failure: Visual regression found in visual QA loop
     detect: Before/after screenshots show unintended layout, hierarchy, or state change.
@@ -318,3 +361,6 @@ gotchas:
   - trap: Calling it done after desktop
     why: Most visual failures hide on mobile, in states, or with real content.
     correct: Check at least one small viewport and one non-happy state for meaningful UI work.
+  - trap: Calling it done after the first visible improvement
+    why: The first fix often exposes the next awkward leftover that screenshots make obvious.
+    correct: Run the Post-Fix Ruthlessness Gate and either fix the newly exposed issue or name it as residual risk.

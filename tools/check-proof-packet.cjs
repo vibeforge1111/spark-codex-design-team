@@ -14,6 +14,7 @@ const REQUIRED_FIELDS = [
   "Lens used",
   "Exact fix",
   "Verification",
+  "Post-fix ruthlessness",
   "Accepted visual change",
   "Still weak",
   "Reusable rule",

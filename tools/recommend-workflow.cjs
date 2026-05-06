@@ -7,7 +7,7 @@ const LANES = [
     triggers: ["first", "demo", "quick", "x", "launch", "public", "polish"],
     lenses: ["visual-loop-qa"],
     commands: ["npm run create-proof-packet -- --cwd ../my-app"],
-    evidence: ["desktop/tablet/mobile/fluid before-after screenshots", "Codex App vision observations", "Run Report Contract"]
+    evidence: ["desktop/tablet/mobile/fluid before-after screenshots", "Codex App vision observations", "Post-Fix Ruthlessness Check", "Run Report Contract"]
   },
   {
     id: "intent",

@@ -15,7 +15,9 @@ Use this when a builder wants value fast.
 7. Use at most 1-2 specialist lenses, only if they change the next action.
 8. Fix the issue.
 9. Capture matching after screenshots.
-10. Finish with the Run Report Contract.
+10. Run the Post-Fix Ruthlessness Check: look for awkward leftover onboarding, duplicated actions, floating copy, box soup, text-first clutter, and responsive regressions.
+11. Make one more focused fix if that check exposes a higher-impact visible issue.
+12. Finish with the Run Report Contract.
 
 Screenshots are not the value by themselves. They are the evidence Codex App vision needs before making a visual claim.
 
@@ -28,6 +30,7 @@ Start with `visual-loop-qa`, then route only when the screenshot proves a specif
 | Product job, page job, success moment, or ideal user route is unclear | `product-intent-observer` | The guild needs product/page truth before visual critique. |
 | Mobile, tablet, or fluid-width crop, wrapping, hidden controls, cramped taps, unreadable columns, or horizontal overflow | `responsive-vision-auditor` | The issue depends on viewport behavior. |
 | Screen looks polished but the next action, first-time path, recovery, or amount of information feels confusing or overwhelming | `user-flow-friction-auditor` | The issue is product comprehension, not visual decoration. |
+| After screenshots are better but still show awkward leftovers, duplicated actions, floating copy, box soup, or text-first clutter | `visual-loop-qa` + `user-flow-friction-auditor` | The first fix exposed the next visible workflow problem. |
 | Dashboard is pretty but not operationally clear | `saas-dashboard-operator` | The issue is information architecture and repeated use. |
 | Hover, focus, modal, loading, disabled, or error states are unknown | `interaction-state-inspector` | The issue is a state, not a static screen. |
 | Contrast, focus visibility, target size, or color-only meaning is risky | `visual-accessibility-sentinel` | The issue affects whether people can use the UI. |
@@ -83,7 +86,7 @@ npm run check-proof-packet -- --cwd ../my-app
 npm run score-proof-packet -- --cwd ../my-app
 ```
 
-Aim for `95/100` only when the packet has screenshots, actual vision observations, viewport coverage, a specific fix, verification, residual risk, and automation notes. A low score is useful; it means the run was still mostly talk.
+Aim for `95/100` only when the packet has screenshots, actual vision observations, viewport coverage, a specific fix, verification, post-fix ruthlessness, residual risk, and automation notes. A low score is useful; it means the run was still mostly talk.
 
 ```text
 Goal:
@@ -96,6 +99,7 @@ Chosen issue:
 Lens used:
 Exact fix:
 Verification:
+Post-fix ruthlessness:
 Accepted visual change:
 Still weak:
 Reusable rule:

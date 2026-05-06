@@ -17,7 +17,7 @@ The demo starts with intentional problems:
 Prompt:
 
 ```text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect screenshots with Codex App vision, fix the single highest-impact visual issue, then show before/after screenshot paths and what changed.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect screenshots with Codex App vision, fix the single highest-impact visual issue, run the Post-Fix Ruthlessness Check, then show before/after screenshot paths and what changed.
 ```
 
 Expected flow:
@@ -28,7 +28,8 @@ Expected flow:
 4. Pick one highest-impact issue.
 5. Fix it.
 6. Capture after screenshots.
-7. Finish with the Run Report Contract.
+7. Run the Post-Fix Ruthlessness Check for awkward leftovers.
+8. Finish with the Run Report Contract.
 
 ## Run Report Contract
 
@@ -45,6 +46,7 @@ Chosen issue:
 Lens used:
 Exact fix:
 Verification:
+Post-fix ruthlessness:
 Accepted visual change:
 Still weak:
 Reusable rule:
@@ -60,6 +62,8 @@ Evidence: desktop, tablet, mobile, and awkward in-between screenshots show muted
 Fix: increase contrast on the proof card text and make the before/after purpose clearer.
 
 Verification: after screenshots show the proof card can be read without zooming, and the final response names the remaining weaknesses.
+
+Post-fix ruthlessness: after screenshots still show the demo is intentionally simple, but no higher-impact leftover onboarding copy, duplicated action, or box soup remains for the disposable target.
 
 ## What Success Looks Like
 
@@ -78,6 +82,7 @@ Screenshots:
 - screenshots/after-mobile.png
 - screenshots/after-fluid.png
 Reusable rule: proof areas need readable contrast before visual polish counts.
+Post-fix ruthlessness: no higher-impact leftover issue beat the proof-card contrast fix in the after screenshots.
 Automation notes: manual screenshot pass only; no Playwright baseline added for the disposable demo.
 ```
 

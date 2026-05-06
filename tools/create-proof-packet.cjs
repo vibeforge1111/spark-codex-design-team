@@ -64,6 +64,7 @@ Chosen issue:
 Lens used:
 Exact fix:
 Verification:
+Post-fix ruthlessness:
 Accepted visual change:
 Still weak:
 Reusable rule:
@@ -111,6 +112,8 @@ Exact fix:
 
 Verification:
 
+Post-fix ruthlessness:
+
 Accepted visual change:
 
 Still weak:
@@ -122,7 +125,7 @@ Automation notes:
 ## Suggested Codex Prompt
 
 \`\`\`text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect the actual screenshots with Codex App vision, record specific vision observations for each viewport, check whether the user flow has a clear next action and whether reusable patterns follow the art bible/component system, fix the single highest-impact visual issue or flow issue, use at most 1-2 specialist lenses only if screenshots prove they are needed, then finish with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, vision observations, top issues, chosen issue, lens used, exact fix, verification, accepted visual change, still weak, reusable rule, automation notes.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect the actual screenshots with Codex App vision, record specific vision observations for each viewport, check whether the user flow has a clear next action and whether reusable patterns follow the art bible/component system, fix the single highest-impact visual issue or flow issue, use at most 1-2 specialist lenses only if screenshots prove they are needed, then run the Post-Fix Ruthlessness Check for awkward leftover onboarding, duplicated actions, floating copy, box soup, text-first clutter, and responsive regressions. Make one more focused fix if that check reveals a higher-impact visible issue. Finish with the Run Report Contract: goal, viewport matrix, state matrix, screenshots inspected, vision observations, top issues, chosen issue, lens used, exact fix, verification, post-fix ruthlessness, accepted visual change, still weak, reusable rule, automation notes.
 \`\`\`
 `;
 }

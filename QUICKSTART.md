@@ -4,7 +4,7 @@ This is the shortest path from "I saw the guild on X" to "Codex improved a real 
 
 ## 30 Seconds: What It Does
 
-Codex Visual Builder Guild makes Codex stop guessing from source code. It runs your app, captures desktop, tablet, mobile, and awkward in-between screenshots, uses Codex App vision to inspect what actually rendered, fixes the biggest visual issue, and compares before/after screenshots.
+Codex Visual Builder Guild makes Codex stop guessing from source code. It runs your app, captures desktop, tablet, mobile, and awkward in-between screenshots, uses Codex App vision to inspect what actually rendered, fixes the biggest visual issue, runs a post-fix ruthlessness check, and compares before/after screenshots.
 
 Use it when an AI-made UI is "almost there" but still has weak hierarchy, mobile breakage, contrast problems, awkward spacing, missing states, confusing user flow, overwhelming setup, component drift, or unclear visual proof.
 
@@ -32,7 +32,7 @@ If Codex does not recognize `codex-visual-builder-guild`, restart Codex Desktop 
 Open the project you want Codex to improve, then paste:
 
 ```text
-Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect screenshots with Codex App vision, fix the single highest-impact visual issue, then show before/after screenshot paths and what changed.
+Use codex-visual-builder-guild on this app. Run it, screenshot desktop, tablet, mobile, and one awkward in-between width, inspect screenshots with Codex App vision, fix the single highest-impact visual issue, run the Post-Fix Ruthlessness Check for awkward leftovers, then show before/after screenshot paths and what changed.
 ```
 
 Good output includes:
@@ -43,6 +43,7 @@ Good output includes:
 - at most 1-2 specialist lenses, only when screenshot evidence justifies them
 - the fix that was made
 - after screenshots
+- the post-fix ruthlessness check: what still looked awkward, and whether it changed the next action
 - what improved
 - what stayed weak
 - one reusable design rule

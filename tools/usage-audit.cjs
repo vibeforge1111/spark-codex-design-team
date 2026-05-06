@@ -135,6 +135,7 @@ function assertScaffoldToolsWork() {
     assert(proofText.includes("Audit the dashboard command surface."), "proof packet should include the requested goal");
     assert(proofText.includes("Viewport matrix:"), "proof packet should include viewport matrix");
     assert(proofText.includes("Vision observations:"), "proof packet should include vision observations");
+    assert(proofText.includes("Post-fix ruthlessness:"), "proof packet should include post-fix ruthlessness");
     assert(proofText.includes("Automation notes:"), "proof packet should include automation notes");
     assert(proofText.includes("desktop, tablet, mobile, and one awkward in-between width"), "proof packet prompt should require full responsive coverage");
     assert(proofText.includes("Codex App vision"), "proof packet prompt should require Codex App vision");
@@ -155,6 +156,7 @@ Chosen issue: add command surface because it changes the first five seconds.
 Lens used: saas-dashboard-operator.
 Exact fix: added command spine above evidence lists.
 Verification: after screenshot shows trust status, next fix, and vitals above the fold.
+Post-fix ruthlessness: after screenshot still has long evidence sections, but no higher-impact leftover remains above the fold.
 Accepted visual change: new command spine is intentionally visible before Good/Bad/Ugly.
 Still weak: lower evidence sections remain long.
 Reusable rule: dashboards must answer the operator question before showing raw evidence.
@@ -172,6 +174,7 @@ Automation notes: manual screenshot pass only.
     });
     assert(scoreOutput.includes("Proof packet score:"), "score-proof-packet should print a score");
     assert(scoreOutput.includes("actual vision observations"), "score-proof-packet should score vision observations");
+    assert(scoreOutput.includes("post-fix ruthlessness"), "score-proof-packet should score post-fix ruthlessness");
 
     execFileSync(process.execPath, [PLAYWRIGHT_SCAFFOLD_TOOL, "--cwd", tempProject, "--url", "http://127.0.0.1:5173/#agent", "--name", "agent-dashboard"], {
       cwd: ROOT,
@@ -401,7 +404,9 @@ for (const phrase of [
 
 for (const phrase of [
   "desktop, tablet, mobile, and one awkward in-between width",
-  "Codex App vision"
+  "Codex App vision",
+  "Post-fix ruthlessness:",
+  "Post-Fix Ruthlessness Check"
 ]) {
   assert(proofPacketTool.includes(phrase), `proof packet generator should include native responsive phrase: ${phrase}`);
 }

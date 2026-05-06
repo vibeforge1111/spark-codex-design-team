@@ -40,6 +40,7 @@ owns:
   - Detecting raw value drift and duplicated component patterns
   - Creating a minimal design-system source of truth when none exists
   - Handoff between art bible, brand, tokens, and regression baselines
+  - Post-fix checks that decide whether a successful flow or visual pattern becomes a reusable rule
 delegates:
   - skill: art-bible-extractor
     when: No art bible exists or accepted screenshots need to become reusable visual rules
@@ -147,6 +148,17 @@ anti_patterns:
       GOOD: Promote repeated patterns into a documented component rule or a small reusable component when the repo supports it.
       ```
     detection: rg -n "wizard|stepper|empty state|command surface|setup guide|checklist|card" src app components docs --glob "*.{ts,tsx,js,jsx,html,md}" 2>nul
+  - name: No Art Bible After A Winning Fix
+    example: |-
+      ```text
+      BAD: Accept a better setup guide, command surface, empty state, or rail pattern without recording the rule that made it better.
+      ```
+    why_bad: Future Codex runs will recreate the old mistake because the useful design decision stayed only in chat or screenshots.
+    instead: |-
+      ```text
+      GOOD: Add a short art-bible/component rule with anatomy, where to use it, no-go states, and screenshot evidence.
+      ```
+    detection: rg -n "DESIGN.md|ART_BIBLE.md|component contract|setup guide|command surface|empty state|rail|composer" . --glob "*.{md,ts,tsx,js,jsx,html,css,scss}" 2>nul
 patterns:
   - name: Find-Or-Create System Contract
     when: Use before a visual fix becomes a reusable pattern.
@@ -180,6 +192,22 @@ patterns:
       - Do not abstract a one-off too early
       - Keep the first contract short
       - Include state behavior, not only appearance
+  - name: Art Bible Aftercare
+    when: Use after the post-fix ruthlessness check accepts a visual or flow pattern.
+    implementation: |-
+      ```text
+      art_bible_aftercare:
+        accepted_screenshot: local path and viewport
+        rule: one practical sentence future agents can follow
+        anatomy: visible parts of the pattern
+        use_when: product/page intent that calls for it
+        avoid_when: cases where the pattern would create clutter or wrong hierarchy
+        verification: screenshot/state that proves it
+      ```
+    gotchas:
+      - Do not write a mood-board paragraph
+      - Do not introduce broad tokens unless values repeat
+      - The rule should prevent a real mistake already seen in screenshots
   - name: Drift Audit
     when: Use when a screen feels close but not native to the project.
     implementation: |-
@@ -229,6 +257,14 @@ testing:
       Screenshot the changed surface and one nearby unaffected surface.
       Fail if unrelated components visibly changed without an accepted rule.
       ```
+  - type: Art bible aftercare check
+    focus: Ensure winning fixes become reusable without bloating the system
+    example: |-
+      ```text
+      After acceptance, search for DESIGN.md or ART_BIBLE.md.
+      Add or update the smallest relevant component rule.
+      Fail if a reusable setup, onboarding, rail, or command pattern has no rule.
+      ```
 decision_framework:
   - situation: The project has an existing art bible, token map, or component library
     choose: Enforce the existing system first
@@ -246,6 +282,10 @@ decision_framework:
     choose: Delegate to brand-consistency-enforcer or design-token-surgeon
     because: Brand alignment and token implementation are narrower owners.
     avoid: Turning every style mismatch into a component-system rewrite
+  - situation: A post-fix ruthlessness pass accepts a new reusable flow or visual structure
+    choose: Run Art Bible Aftercare
+    because: The accepted pattern should become project memory before the next screen copies it.
+    avoid: Leaving reusable decisions only in the conversation transcript
 recovery:
   - failure: Component drift shipped
     detect: Screenshots show the same pattern with different spacing, states, labels, or button treatments.
@@ -300,3 +340,6 @@ gotchas:
   - trap: Letting future agents infer the art bible from vibes
     why: Agents copy visible style inconsistently without explicit constraints.
     correct: Put reusable rules in a file, proof packet, or screenshot baseline with exact examples.
+  - trap: Treating the after screenshot as enough memory
+    why: Future agents need the rule and boundary, not only the image.
+    correct: Add the smallest art-bible/component note after a winning pattern survives vision review.

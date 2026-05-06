@@ -38,6 +38,11 @@ load_order:
   - screenshot-regression-guard      # preserve before/after baselines so future loops do not backslide
 notes: |
   The core loop is evidence-first: build, run, screenshot, inspect with vision,
-  revise, and compare. Imagegen creates source material; vision judges the
-  rendered interface. The bundle is intentionally routed through visual-loop-qa
-  so narrow specialists do not all try to own the same design decision.
+  revise, compare, then run a post-fix ruthlessness pass before acceptance.
+  Imagegen creates source material; vision judges the rendered interface.
+  The bundle is intentionally routed through visual-loop-qa so narrow
+  specialists do not all try to own the same design decision. If the after
+  screenshots expose leftover onboarding, duplicated actions, floating copy,
+  box soup, text-first clutter, or middle-width regressions, fix one more
+  focused issue and preserve the accepted rule through the component-system
+  or screenshot-regression lanes.
