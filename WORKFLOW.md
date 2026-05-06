@@ -7,7 +7,7 @@ The guild should feel like a small visual QA system, not a role-playing ceremony
 Use this when a builder wants value fast.
 
 1. Run the app locally.
-2. Capture before screenshots for desktop and mobile.
+2. Capture before screenshots for desktop, tablet, mobile, and one awkward in-between width.
 3. Inspect the screenshots with actual Codex App vision.
 4. Record concrete vision observations by viewport.
 5. Name the top 3 visible issues.
@@ -25,7 +25,7 @@ Start with `visual-loop-qa`, then route only when the screenshot proves a specif
 
 | Screenshot evidence | Lens to use | Why |
 | --- | --- | --- |
-| Mobile crop, wrapping, hidden controls, cramped taps | `responsive-vision-auditor` | The issue depends on viewport behavior. |
+| Mobile, tablet, or fluid-width crop, wrapping, hidden controls, cramped taps, unreadable columns, or horizontal overflow | `responsive-vision-auditor` | The issue depends on viewport behavior. |
 | Dashboard is pretty but not operationally clear | `saas-dashboard-operator` | The issue is information architecture and repeated use. |
 | Hover, focus, modal, loading, disabled, or error states are unknown | `interaction-state-inspector` | The issue is a state, not a static screen. |
 | Contrast, focus visibility, target size, or color-only meaning is risky | `visual-accessibility-sentinel` | The issue affects whether people can use the UI. |
@@ -49,9 +49,9 @@ npm run recommend-workflow -- --need "dashboard mobile regression"
 
 | Need | Default output | Extra proof when it matters |
 | --- | --- | --- |
-| first public demo polish | before/after desktop + mobile screenshots | proof packet checked with `npm run check-proof-packet` |
+| first public demo polish | before/after desktop, tablet, mobile, and fluid-width screenshots | proof packet checked with `npm run check-proof-packet` |
 | SaaS/admin/dashboard work | command surface, scannable metrics, clear next action | `saas-dashboard-operator` plus real-content stress |
-| mobile reliability | mobile screenshot before/after and tap-target review | tablet/wide matrix if layout has breakpoints |
+| mobile reliability | mobile, tablet, and fluid-width screenshots before/after plus tap-target review | wide matrix if layout has breakpoints |
 | component library work | state matrix for component states | Storybook/Chromatic visual review |
 | accessibility confidence | contrast/focus/tap/color review | axe check plus manual focus screenshot |
 | generated visual assets | asset in the real UI, not isolated | asset provenance notes and replacement guidance |

@@ -52,7 +52,7 @@ For each responsive screenshot, use vision to answer:
 - Does the visual hierarchy survive the transition between mobile/tablet/desktop?
 - Is horizontal overflow intentional, or is it a layout bug?
 
-If a middle-width screenshot finds a bug that desktop/mobile missed, prefer fixing the fluid layout rule over hard-coding one exact viewport.
+If a middle-width screenshot finds a bug that named desktop or mobile checks missed, prefer fixing the fluid layout rule over hard-coding one exact viewport.
 
 Only route to a specialist when that lens changes the next action.
 

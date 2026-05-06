@@ -41,6 +41,10 @@ function assert(condition, message) {
   if (!condition) fail(message);
 }
 
+function assertNotIncludes(text, phrase, message) {
+  assert(!text.includes(phrase), message);
+}
+
 function read(file) {
   return fs.readFileSync(file, "utf8");
 }
@@ -130,6 +134,10 @@ function assertScaffoldToolsWork() {
     assert(proofText.includes("Viewport matrix:"), "proof packet should include viewport matrix");
     assert(proofText.includes("Vision observations:"), "proof packet should include vision observations");
     assert(proofText.includes("Automation notes:"), "proof packet should include automation notes");
+    assert(proofText.includes("desktop, tablet, mobile, and one awkward in-between width"), "proof packet prompt should require full responsive coverage");
+    assert(proofText.includes("Codex App vision"), "proof packet prompt should require Codex App vision");
+    assertNotIncludes(proofText, "screenshot desktop and mobile", "proof packet prompt should not regress to desktop/mobile-only screenshots");
+    assertNotIncludes(proofText, "actual screenshots with vision", "proof packet prompt should not use generic vision wording");
     fs.mkdirSync(path.join(tempProject, "artifacts", "visual-guild"), { recursive: true });
     fs.writeFileSync(path.join(tempProject, "artifacts", "visual-guild", "before-desktop.png"), "fake", "utf8");
     fs.writeFileSync(path.join(tempProject, "artifacts", "visual-guild", "after-desktop.png"), "fake", "utf8");
@@ -191,10 +199,17 @@ function assertWorkflowRecommenderWorks() {
   assert(output.includes("SaaS/admin/dashboard operation"), "workflow recommender should route dashboard needs");
   assert(output.includes("Mobile and responsive confidence"), "workflow recommender should route mobile needs");
   assert(output.includes("Regression-sensitive visual baseline"), "workflow recommender should route regression needs");
+  assert(output.includes("tablet screenshot"), "workflow recommender should include tablet evidence");
+  assert(output.includes("awkward fluid-width screenshot"), "workflow recommender should include fluid-width evidence");
+  assertNotIncludes(output, "desktop before/after screenshots", "workflow recommender should not regress to desktop/mobile-only evidence");
 }
 
 const skills = loadSkills();
 const skillIds = skills.map(skill => skill.id).sort();
+const imagegenTaggedIds = skills
+  .filter(skill => (skill.tags || []).includes("imagegen"))
+  .map(skill => skill.id)
+  .sort();
 const readme = read(README);
 const quickstart = read(QUICKSTART);
 const workflow = read(WORKFLOW);
@@ -205,9 +220,15 @@ const benchmarksReadme = read(BENCHMARKS_README);
 const benchmarksTemplate = read(BENCHMARKS_TEMPLATE);
 const codexSkill = read(CODEX_SKILL);
 const openaiYaml = read(CODEX_OPENAI);
+const proofPacketTool = read(PROOF_PACKET_TOOL);
+const workflowRecommender = read(WORKFLOW_RECOMMENDER);
 const packageJson = JSON.parse(read(PACKAGE_JSON));
 
 assert(skills.length === 16, `expected 16 design skills, found ${skills.length}`);
+assert(
+  JSON.stringify(imagegenTaggedIds) === JSON.stringify(["asset-provenance-librarian", "imagegen-asset-director"]),
+  `only asset-specific skills should carry the broad imagegen tag, got ${imagegenTaggedIds.join(", ")}`
+);
 assert(packageJson.scripts?.["install:codex"] === "node tools/install-codex-skill.cjs", "package.json should expose install:codex");
 assert(packageJson.scripts?.["recommend-workflow"] === "node tools/recommend-workflow.cjs", "package.json should expose recommend-workflow");
 assert(packageJson.scripts?.["create-proof-packet"] === "node tools/create-proof-packet.cjs", "package.json should expose create-proof-packet");
@@ -317,6 +338,40 @@ for (const phrase of [
 ]) {
   assert(benchmarksReadme.includes(phrase), `benchmarks README should include: ${phrase}`);
   assert(benchmarksTemplate.includes(phrase) || phrase === "Do not invent results", `benchmark template should include: ${phrase}`);
+}
+
+for (const [text, label] of [
+  [workflow, "WORKFLOW"],
+  [benchmarksTemplate, "benchmark template"],
+  [proofPacketTool, "proof packet generator"],
+  [workflowRecommender, "workflow recommender"],
+  [prompts, "PROMPTS"],
+  [codexSkill, "Codex wrapper"]
+]) {
+  assertNotIncludes(text, "screenshot desktop and mobile", `${label} should not regress to desktop/mobile-only screenshot wording`);
+  assertNotIncludes(text, "capture before screenshots on desktop and mobile", `${label} should not regress to desktop/mobile-only screenshot wording`);
+  assertNotIncludes(text, "actual screenshots with vision", `${label} should not use generic vision wording when Codex App vision is intended`);
+  assertNotIncludes(text, "Codex vision", `${label} should say Codex App vision for native workflows`);
+  assertNotIncludes(text, "desktop/mobile fit", `${label} should not compress responsive evidence into desktop/mobile only`);
+  assertNotIncludes(text, "desktop before/after screenshots", `${label} should not recommend desktop/mobile-only evidence`);
+}
+
+for (const phrase of [
+  "desktop, tablet, mobile, and one awkward in-between width",
+  "Codex App vision",
+  "before tablet:",
+  "before fluid:",
+  "after tablet:",
+  "after fluid:"
+]) {
+  assert(benchmarksTemplate.includes(phrase), `benchmark template should include native responsive phrase: ${phrase}`);
+}
+
+for (const phrase of [
+  "desktop, tablet, mobile, and one awkward in-between width",
+  "Codex App vision"
+]) {
+  assert(proofPacketTool.includes(phrase), `proof packet generator should include native responsive phrase: ${phrase}`);
 }
 
 const demoText = `${read(DEMO_README)}\n${read(DEMO_PROOF)}\n${read(DEMO_INDEX)}\n${read(DEMO_STYLES)}`;

@@ -83,7 +83,7 @@ Use this after the first run, or when you know the guild was getting too theatri
 ```text
 Use codex-visual-builder-guild on this app as a no-ceremony visual QA pass.
 
-Run the app, capture before screenshots on desktop and mobile, inspect the rendered UI with actual Codex vision, record concrete observations, and route to at most two specialist lenses based only on screenshot evidence. If no specialist lens changes the next action, say so and use none.
+Run the app, capture before screenshots on desktop, tablet, mobile, and one awkward in-between width, inspect the rendered UI with Codex App vision, record concrete observations, and route to at most two specialist lenses based only on screenshot evidence. If no specialist lens changes the next action, say so and use none.
 
 Fix the single highest-impact issue, capture matching after screenshots, and finish with the full Run Report Contract including viewport matrix, state matrix, accepted visual change, and automation notes.
 ```

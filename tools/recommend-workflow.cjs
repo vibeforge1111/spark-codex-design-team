@@ -7,7 +7,7 @@ const LANES = [
     triggers: ["first", "demo", "quick", "x", "launch", "public", "polish"],
     lenses: ["visual-loop-qa"],
     commands: ["npm run create-proof-packet -- --cwd ../my-app"],
-    evidence: ["desktop before/after screenshots", "mobile before/after screenshots", "Run Report Contract"]
+    evidence: ["desktop/tablet/mobile/fluid before-after screenshots", "Codex App vision observations", "Run Report Contract"]
   },
   {
     id: "dashboard",
@@ -23,7 +23,7 @@ const LANES = [
     triggers: ["mobile", "responsive", "tablet", "viewport", "overflow", "wrapping", "tap"],
     lenses: ["visual-loop-qa", "responsive-vision-auditor"],
     commands: ["npm run create-proof-packet -- --cwd ../my-app"],
-    evidence: ["mobile screenshot", "desktop screenshot", "tap target and text fit review"]
+    evidence: ["mobile screenshot", "tablet screenshot", "awkward fluid-width screenshot", "tap target and text fit review"]
   },
   {
     id: "component-states",
@@ -47,7 +47,7 @@ const LANES = [
     triggers: ["imagegen", "asset", "image", "hero", "illustration", "photo", "visual", "provenance"],
     lenses: ["visual-loop-qa", "imagegen-asset-director", "asset-provenance-librarian"],
     commands: ["npm run create-proof-packet -- --cwd ../my-app"],
-    evidence: ["asset shown inside real UI", "desktop/mobile fit", "provenance or replacement note"]
+    evidence: ["asset shown inside real UI", "desktop/tablet/mobile/fluid fit", "provenance or replacement note"]
   },
   {
     id: "regression",

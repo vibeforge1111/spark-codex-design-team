@@ -9,7 +9,6 @@ layer: 2
 tags:
   - codex-desktop
   - vision
-  - imagegen
   - visual-qa
   - ui-polish
   - visual-accessibility-sentinel
