@@ -7,6 +7,28 @@ The goal is to compare two workflows on the same UI task:
 - **Plain Codex:** normal request, no guild workflow.
 - **Guild Codex:** `codex-visual-builder-guild` with screenshot inspection, vision observations, proof packet, and score.
 
+## Installation / Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up any required environment variables (e.g., API keys) in a `.env` file. Refer to the project documentation for specific variables.
+
+4. Run the benchmark suite:
+   ```bash
+   npm run benchmark
+   ```
+
+For detailed instructions, see the main project README.
+
 ## Required Result Shape
 
 Each benchmark run should include:
