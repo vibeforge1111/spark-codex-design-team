@@ -2,6 +2,23 @@
 
 This is a tiny static app with intentional visual problems. It exists so new users can prove the guild works before pointing it at their real product.
 
+## Installation
+
+No installation required. This is a static HTML/CSS/JS app that runs entirely in the browser. Simply serve it with any static file server.
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.x (for the built-in HTTP server)
+- A modern web browser
+- [Codex Desktop](https://codex.ai) with the visual-builder-guild installed
+
+### Setup
+
+1. Clone or download this repository.
+2. Open a terminal in this folder.
+
 ## Run It
 
 From this folder:
